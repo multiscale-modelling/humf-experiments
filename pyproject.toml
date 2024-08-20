@@ -1,0 +1,18 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "humf-experiments"
+version = "0.1.0"
+description = ""
+authors = ["Niklas Kappel <niklas.kappel@kit.edu>"]
+readme = "README.md"
+packages = [{ include = "humf_experiments", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "~3.11"
+humf = { path = "../humf", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
