@@ -40,5 +40,4 @@ class NH2OTrajectory(zn.Node):
             )
 
             os.makedirs(self.n_h2o_trajectory_dir, exist_ok=True)
-            for output_file in ["reduced.gro", "tmp.edr", "tmp.trr"]:
-                shutil.copy(tempdir / output_file, self.n_h2o_trajectory_dir)
+            shutil.copy(tempdir / "reduced.gro", self.n_h2o_trajectory_dir)
