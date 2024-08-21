@@ -16,8 +16,8 @@ def check_gmx_command():
 class TestNH2OTrajectory:
     def test_run(self):
         node = NH2OTrajectory(
-            trajectory_dir="tests/inputs/h2o_trajectory",
             num_molecules=3,
             concatenate=1,
+            h2o_trajectory_dir="tests/inputs/h2o_trajectory",
         )
         node.run()
