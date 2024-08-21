@@ -17,7 +17,7 @@ class NH2OTrajectory(zn.Node):
     concatenate: int = zn.params()
 
     def run(self):
-        trajectory_dir = Path(self.trajectory_dir)
+        trajectory_dir = Path(self.trajectory_dir).resolve()
         assert trajectory_dir.is_dir()
 
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
