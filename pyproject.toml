@@ -12,7 +12,7 @@ packages = [{ include = "humf_experiments", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "~3.11"
-humf = { path = "../humf", develop = true }
+humf = { git = "git@gitlab.kit.edu:kit/ag_wenzel/humf.git" }
 zntrack = "^0.7.3"
 
 [tool.poetry.group.dev.dependencies]
