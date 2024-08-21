@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 
 # See: https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
@@ -9,7 +10,6 @@ concatenate=$3
 
 echo "assuming 3 point water model"
 echo "assuming the data is under $datafolder as nvt.xtc, nvt.gro and an additional system_sed.top with REPLACE instead of the original molecule number"
-echo "assuming increasing_indices.py and fix_times.py is in the current (output) folder"
 echo "if 4 pt change indices generating script to increasing_indices_4pt.py and atnr multiplicative factor to 4"
 
 echo "concatenating $M_Molecules Molecules $concatenate times"
@@ -45,8 +45,3 @@ ls reduced_*.xtc | xargs rm
 ls *tmp.ndx | xargs rm
 rm reduced.xtc
 mv reduced_times.gro reduced.gro
-
-gmx grompp -f ${datafolder}/nvt_rerun.mdp -c reduced.gro -o tmp -p current_system.top
-gmx mdrun -deffnm tmp -rerun reduced.gro
-echo "Potential" | gmx energy -f tmp.edr
-gmx dump -f tmp.trr >dumped_forces.txt

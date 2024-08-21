@@ -1,6 +1,6 @@
 outs:
-- md5: e296db83857523b8a10d18892dc964fe.dir
-  size: 15218701
-  nfiles: 4
+- md5: 0aef0ee8c30b67d9b0192a4b2bac0d33.dir
+  size: 15927560
+  nfiles: 7
   hash: md5
   path: h2o_trajectory
