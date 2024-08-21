@@ -22,7 +22,6 @@ for ((i = 0; i < ${concatenate}; i++)); do
 	gmx trjconv -f ordered.xtc -s ${datafolder}/nvt.gro -o reduced_${i}.xtc -n ${i}_tmp.ndx
 done
 gmx trjcat -f reduced_*.xtc -o reduced.xtc -cat
-read -p "new tpr needed"
 sed "s|REPLACE|${M_Molecules}|g" ${datafolder}/system_sed.top >current_system.top
 
 #needs a new variable gro file for M_molecules
@@ -33,13 +32,10 @@ echo $atnr >>tmp.gro
 head -n $((2 + $atnr)) ${datafolder}/nvt.gro | tail -n $atnr >>tmp.gro
 tail -n 1 ${datafolder}/nvt.gro >>tmp.gro
 cat tmp.gro
-read -p "check tmp.gro"
 gmx grompp -f ${datafolder}/nvt_f.mdp -o rename_tpr.tpr -c tmp.gro -p current_system.top
-read -p "tpr done"
 rm tmp.gro
 echo -ee "r1 \n q \n" | gmx make_ndx -f rename_tpr.tpr -o cluster.ndx
 echo "0 3 0" | gmx trjconv -f reduced.xtc -o reduced.gro -s rename_tpr.tpr -pbc cluster -center -n cluster.ndx
-read -p "trjconv correct???"
 python3 "$SCRIPT_DIR/fix_times.py"
 ls reduced_*.xtc | xargs rm
 ls *tmp.ndx | xargs rm
