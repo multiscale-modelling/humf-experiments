@@ -1,0 +1,57 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+variables:
+  PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+  POETRY_HOME: $CI_PROJECT_DIR/.poetry
+
+default:
+  image: python:3.11
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .cache/pip
+      - .poetry
+      - .venv
+    policy: pull
+  before_script:
+    - source $($POETRY_HOME/bin/poetry env info --path)/bin/activate
+
+stages:
+  - deps
+  - lint
+  - test
+
+poetry:
+  stage: deps
+  rules:
+    - changes:
+        - poetry.lock
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - .cache/pip
+      - .poetry
+      - .venv
+    policy: pull-push
+  before_script:
+    - echo Installing dependencies ...
+  script:
+    - python3 -m venv $POETRY_HOME
+    - $POETRY_HOME/bin/pip install poetry==1.8.3
+    - $POETRY_HOME/bin/poetry config virtualenvs.in-project true
+    - $POETRY_HOME/bin/poetry install
+
+pre-commit:
+  stage: lint
+  script:
+    - source .gitlab-ci/pre-commit.sh
+
+pytest:
+  stage: test
+  script:
+    - pytest
