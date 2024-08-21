@@ -3,9 +3,9 @@ set -e
 # See: https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-M_Molecules=$1
-concatenate=$2
-datafolder="/shared/user_data/is2364/classical_ff_models/tip3p/"
+datafolder=$1
+M_Molecules=$2
+concatenate=$3
 
 echo "assuming 3 point water model"
 echo "assuming the data is under $datafolder as nvt.xtc, nvt.gro and an additional system_sed.top with REPLACE instead of the original molecule number"
@@ -40,7 +40,7 @@ rm tmp.gro
 echo -ee "r1 \n q \n" | gmx make_ndx -f rename_tpr.tpr -o cluster.ndx
 echo "0 3 0" | gmx trjconv -f reduced.xtc -o reduced.gro -s rename_tpr.tpr -pbc cluster -center -n cluster.ndx
 read -p "trjconv correct???"
-python3 fix_times.py
+python3 "$SCRIPT_DIR/fix_times.py"
 ls reduced_*.xtc | xargs rm
 ls *tmp.ndx | xargs rm
 rm reduced.xtc

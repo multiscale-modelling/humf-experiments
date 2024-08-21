@@ -11,17 +11,14 @@ from humf_experiments.nodes.zntrack_utils import zop
 
 
 class NH2OTrajectory(zn.Node):
-    trajectory_gro: str = zn.deps_path()
-    trajectory_xtc: str = zn.deps_path()
+    trajectory_dir: str = zn.deps_path()
 
     num_molecules: int = zn.params()
     concatenate: int = zn.params()
 
     def run(self):
-        trajectory_gro = Path(self.trajectory_gro)
-        trajectory_xtc = Path(self.trajectory_xtc)
-        assert trajectory_gro.exists()
-        assert trajectory_xtc.exists()
+        trajectory_dir = Path(self.trajectory_dir)
+        assert trajectory_dir.is_dir()
 
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
         with TemporaryDirectory() as tempdir:
@@ -30,6 +27,7 @@ class NH2OTrajectory(zn.Node):
                 [
                     "bash",
                     bash_script_path,
+                    trajectory_dir,
                     str(self.num_molecules),
                     str(self.concatenate),
                 ],
