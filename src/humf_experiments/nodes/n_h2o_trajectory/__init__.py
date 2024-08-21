@@ -1,6 +1,6 @@
 # pyright: reportAssignmentType=false
 
-import os
+import shutil
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -23,6 +23,7 @@ class NH2OTrajectory(zn.Node):
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
         with TemporaryDirectory() as tempdir:
             tempdir = Path(tempdir)
+            shutil.copy(trajectory_dir / "tip3p.itp", tempdir)
             subprocess.check_output(
                 [
                     "bash",
