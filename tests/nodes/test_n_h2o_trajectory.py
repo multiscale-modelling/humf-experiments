@@ -1,16 +1,13 @@
 # pyright: reportCallIssue=false
 
-import shutil
-
-import pytest
+from pathlib import Path
 
 from humf_experiments.nodes.n_h2o_trajectory import NH2OTrajectory
 
-
-@pytest.fixture(scope="module", autouse=True)
-def check_gmx_command():
-    if shutil.which("gmx") is None:
-        pytest.skip("Skipping test: 'gmx' command not found.")
+# @pytest.fixture(scope="module", autouse=True)
+# def check_gmx_command():
+#     if shutil.which("gmx") is None:
+#         pytest.skip("Skipping test: 'gmx' command not found.")
 
 
 class TestNH2OTrajectory:
@@ -20,4 +17,5 @@ class TestNH2OTrajectory:
             concatenate=1,
             h2o_trajectory_dir="tests/inputs/h2o_trajectory",
         )
+        node.nwd = Path("outputs", "$nwd$")
         node.run()
