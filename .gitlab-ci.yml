@@ -1,10 +1,10 @@
 workflow:
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    # - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
-    #   when: never
     # - if: $CI_COMMIT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
 
 variables:
   PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
@@ -15,12 +15,14 @@ variables:
 default:
   image: python:3.11
   cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - .cache/pip
-      - .poetry
-      - .venv
-    policy: pull
+    - key: $CI_COMMIT_REF_SLUG
+      fallback_keys:
+        - cache-$CI_DEFAULT_BRANCH
+      paths:
+        - .cache/pip
+        - .poetry
+        - .venv
+      policy: pull
   before_script:
     - source $($POETRY_HOME/bin/poetry env info --path)/bin/activate
 
@@ -32,7 +34,6 @@ stages:
 poetry:
   stage: deps
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - changes:
         - poetry.lock
   cache:
