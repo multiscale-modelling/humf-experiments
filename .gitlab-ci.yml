@@ -32,15 +32,10 @@ stages:
 poetry:
   stage: deps
   rules:
-    # Run the deps stage when the merge request is first created
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_COMMIT_BRANCH != "main" && $CI_MERGE_REQUEST_EVENT_TYPE == "merge_request"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_EVENT_TYPE == "merge_request"
       when: on_success
-    # Run the deps stage for subsequent changes to the merge request if poetry.lock changes
     - changes:
         - poetry.lock
-      when: on_success
-    # Do not run this job otherwise
-    - when: never
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
