@@ -32,8 +32,7 @@ stages:
 poetry:
   stage: deps
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_EVENT_TYPE == "merge_request"
-      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - changes:
         - poetry.lock
   cache:
