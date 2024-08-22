@@ -3,7 +3,7 @@ nsteps                  =  1100000
 nstlist                 = 20 ; 20
 nstcomm                 = 50
 nstpcouple= 10
-dt			= 0.001 
+dt			= 0.001
 nstxtcout		= 5000
 nstfout=		5000
 nstcalcenergy		= 5000
@@ -11,7 +11,7 @@ nstenergy= 		5000
 cutoff-scheme		= Verlet
 coulombtype 		= cutoff ;
 DispCorr		= EnerPres
-tcoupl			= v-rescale; berendsen 
+tcoupl			= v-rescale; berendsen
 tc-grps			= system
 tau-t			= 1.0
 ref-t			= 300
@@ -19,8 +19,8 @@ ref-t			= 300
 pcoupl			= no;  Parrinello-Rahman
 pcoupltype		= isotropic
 tau-p			= 1.0
-ref-p			= 1.0 
-compressibility		=    4.5e-5  ; water ; 300K ; todo 200K 
+ref-p			= 1.0
+compressibility		=    4.5e-5  ; water ; 300K ; todo 200K
 
 gen-vel			=  no
 
@@ -38,4 +38,4 @@ vdw_modifier=None
 coulomb_modifier=None
 
 
-energygrps = SOL 
+energygrps = SOL
