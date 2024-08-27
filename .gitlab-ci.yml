@@ -56,4 +56,5 @@ pre-commit:
 pytest:
   stage: test
   script:
+    - cd tests/
     - pytest

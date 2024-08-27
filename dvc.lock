@@ -1,0 +1,57 @@
+schema: '2.0'
+stages:
+  get_3_h2o_trajectory:
+    cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
+      get_3_h2o_trajectory
+    deps:
+    - path: data/h2o_trajectory
+      hash: md5
+      md5: 0aef0ee8c30b67d9b0192a4b2bac0d33.dir
+      size: 15927560
+      nfiles: 7
+    params:
+      params.yaml:
+        get_3_h2o_trajectory:
+          concatenate: 1
+          num_molecules: 3
+    outs:
+    - path: nodes/get_3_h2o_trajectory/node-meta.json
+      hash: md5
+      md5: 62928bc9e841c8da7202bef2ab161f88
+      size: 64
+    - path: nodes/get_3_h2o_trajectory/reduced.gro
+      hash: md5
+      md5: e27ca38ffbdf4d182b5c307375a719eb
+      size: 104554
+  run_orca:
+    cmd: zntrack run
+      humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
+      --name run_orca
+    deps:
+    - path: nodes/get_3_h2o_trajectory/node-meta.json
+      hash: md5
+      md5: 62928bc9e841c8da7202bef2ab161f88
+      size: 64
+    - path: nodes/get_3_h2o_trajectory/reduced.gro
+      hash: md5
+      md5: e27ca38ffbdf4d182b5c307375a719eb
+      size: 104554
+    params:
+      params.yaml:
+        run_orca:
+          charge: '0'
+          every_nth_frame: 10
+          method_and_basisset: B3LYP def2-TZVP D3BJ
+          multiplicity: '1'
+          pal: '1'
+          run_orca: true
+    outs:
+    - path: nodes/run_orca/frames
+      hash: md5
+      md5: bd7ecbfdf347fbe5f4eb9ad73ad9be16.dir
+      size: 103015302
+      nfiles: 736
+    - path: nodes/run_orca/node-meta.json
+      hash: md5
+      md5: e80d21140a4afc1a8a30e2584b61c70f
+      size: 64

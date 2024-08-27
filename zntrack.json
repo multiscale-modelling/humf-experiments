@@ -1,0 +1,40 @@
+{
+    "get_3_h2o_trajectory": {
+        "h2o_trajectory_dir": "data/h2o_trajectory/",
+        "n_h2o_trajectory": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/reduced.gro"
+        },
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/get_3_h2o_trajectory"
+        }
+    },
+    "run_orca": {
+        "gro_file": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "humf_experiments.nodes.n_h2o_trajectory",
+                        "cls": "NH2OTrajectory",
+                        "name": "get_3_h2o_trajectory",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "n_h2o_trajectory",
+                "item": null
+            }
+        },
+        "output_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/frames"
+        },
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/run_orca"
+        }
+    }
+}
