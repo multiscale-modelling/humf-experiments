@@ -1,0 +1,27 @@
+stages:
+  get_3_h2o_trajectory:
+    cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
+      get_3_h2o_trajectory
+    deps:
+    - data/h2o_trajectory
+    params:
+    - get_3_h2o_trajectory
+    outs:
+    - outputs/nodes/get_3_h2o_trajectory/reduced.gro
+    metrics:
+    - nodes/get_3_h2o_trajectory/node-meta.json:
+        cache: false
+  run_orca:
+    cmd: zntrack run
+      humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
+      --name run_orca
+    deps:
+    - nodes/get_3_h2o_trajectory/node-meta.json
+    - outputs/nodes/get_3_h2o_trajectory/reduced.gro
+    params:
+    - run_orca
+    outs:
+    - outputs/nodes/run_orca/frames
+    metrics:
+    - nodes/run_orca/node-meta.json:
+        cache: false
