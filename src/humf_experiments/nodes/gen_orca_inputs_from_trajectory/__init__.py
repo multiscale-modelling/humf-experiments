@@ -6,6 +6,8 @@ from pathlib import Path
 
 import zntrack as zn
 
+from humf_experiments.nodes.zntrack_utils import zop
+
 
 def run_which(command):
     try:
@@ -27,9 +29,10 @@ class convert_trj_to_individual_orca_inputs(zn.Node):
     charge: str = zn.params()
     pal: str = zn.params()
     run_orca: bool = zn.params()
-    output_dir: str = zn.deps_path()
     every_nth_frame: int = zn.params()
     gro_file: str = zn.params()
+
+    output_dir: str = zop("frames/")
 
     def run(self):
         print("am I running orca", self.run_orca)

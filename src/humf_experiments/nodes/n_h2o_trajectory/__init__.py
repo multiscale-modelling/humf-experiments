@@ -17,7 +17,7 @@ class NH2OTrajectory(zn.Node):
 
     h2o_trajectory_dir: str = zn.deps_path()
 
-    n_h2o_trajectory_dir: str = zop("n_h2o_trajectory_dir/")
+    n_h2o_trajectory_dir: str = zop("n_h2o_trajectory/")
 
     def run(self):
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
