@@ -19,6 +19,6 @@ class TestNH2OTrajectory:
         node = NH2OTrajectory(
             num_molecules=3,
             concatenate=1,
-            h2o_trajectory_dir="tests/inputs/h2o_trajectory",
+            h2o_trajectory_dir="inputs/h2o_trajectory",
         )
         node.run()

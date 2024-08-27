@@ -9,13 +9,12 @@ from humf_experiments.nodes.convert_trajectory_to_orca_inputs import (
 class TestConvertTrajectoryToOrcaInputs:
     def test_run(self):
         node = ConvertTrajectoryToOrcaInputs(
-            method_and_basisset=" B3LYP def2-TZVP D3BJ",
+            method_and_basisset="B3LYP def2-TZVP D3BJ",
             multiplicity="1",
             charge="0",
             pal="1",
             run_orca=False,
-            output_dir="tests/outputs/orca_superdir",
-            gro_file="tests/inputs/orca_runfile_generation/reduced.gro",
+            gro_file="inputs/orca_runfile_generation/reduced.gro",
             every_nth_frame=10,
         )
         node.run()
