@@ -23,7 +23,7 @@ def run_orca_on_file(orca_bin, file, outfile):
         subprocess.Popen([orca_bin, file], stdout=of, stderr=subprocess.STDOUT)
 
 
-class convert_trj_to_individual_orca_inputs(zn.Node):
+class ConvertTrajectoryToOrcaInputs(zn.Node):
     method_and_basisset: str = zn.params()
     multiplicity: str = zn.params()
     charge: str = zn.params()

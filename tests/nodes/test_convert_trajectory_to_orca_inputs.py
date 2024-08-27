@@ -1,14 +1,14 @@
 # pyright: reportCallIssue=false
 
 
-from humf_experiments.nodes.gen_orca_inputs_from_trajectory import (
-    convert_trj_to_individual_orca_inputs,
+from humf_experiments.nodes.convert_trajectory_to_orca_inputs import (
+    ConvertTrajectoryToOrcaInputs,
 )
 
 
-class Test_convert_trj_to_individual_orca_inputs:
+class TestConvertTrajectoryToOrcaInputs:
     def test_run(self):
-        node = convert_trj_to_individual_orca_inputs(
+        node = ConvertTrajectoryToOrcaInputs(
             method_and_basisset=" B3LYP def2-TZVP D3BJ",
             multiplicity="1",
             charge="0",
