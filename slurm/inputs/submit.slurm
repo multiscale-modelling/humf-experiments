@@ -3,19 +3,21 @@
 #SBATCH --mail-type=ALL
 #SBATCH --output=slurm/outputs/%j.out
 
+#SBATCH --mem=2G
+
 if ! ls | grep -qE '^pyproject\.toml$'; then
     echo "Error: sbatch was not run from the project root directory."
     exit 1
 fi
 
 # <<< git
-if ! [ -z "$(git status --porcelain)" ]; then
-    echo "Error: git status is not clear."
-    exit 1
-else
-    echo "Current commit hash:"
-    git rev-parse HEAD
-fi
+#if ! [ -z "$(git status --porcelain)" ]; then
+#    echo "Error: git status is not clear."
+#    exit 1
+#else
+#    echo "Current commit hash:"
+#    git rev-parse HEAD
+#fi
 # >>>
 
 # <<< poetry
@@ -28,12 +30,12 @@ if ! dvc data status -q; then
     exit 1
 fi
 
-if ! dvc status -q; then
-    echo "Error: dvc status is not clear."
-    exit 1
-fi
+#if ! dvc status -q; then
+#    echo "Error: dvc status is not clear."
+#    exit 1
+#fi
 # >>>
 
 module load gromacs
 module load orca
-srun echo "Hello from sbatch!"
+srun dvc repro
