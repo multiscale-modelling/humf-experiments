@@ -15,7 +15,7 @@ class Test_convert_trj_to_individual_orca_inputs:
             pal="1",
             run_orca=False,
             output_dir="tests/outputs/orca_superdir",
-            gro_file="tests/inputs/orca_runfile_generation/reduced.gro",  # "n_h2o_trajectory_dir/reduced.gro",
+            gro_file="tests/inputs/orca_runfile_generation/reduced.gro",
             every_nth_frame=10,
         )
         node.run()
