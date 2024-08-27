@@ -3,7 +3,7 @@
         "h2o_trajectory_dir": "data/h2o_trajectory/",
         "n_h2o_trajectory": {
             "_type": "pathlib.Path",
-            "value": "outputs/$nwd$/reduced.gro"
+            "value": "$nwd$/reduced.gro"
         },
         "nwd": {
             "_type": "pathlib.Path",
@@ -30,7 +30,7 @@
         },
         "output_dir": {
             "_type": "pathlib.Path",
-            "value": "outputs/$nwd$/frames"
+            "value": "$nwd$/frames"
         },
         "nwd": {
             "_type": "pathlib.Path",

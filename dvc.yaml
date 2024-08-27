@@ -7,7 +7,7 @@ stages:
     params:
     - get_3_h2o_trajectory
     outs:
-    - outputs/nodes/get_3_h2o_trajectory/reduced.gro
+    - nodes/get_3_h2o_trajectory/reduced.gro
     metrics:
     - nodes/get_3_h2o_trajectory/node-meta.json:
         cache: false
@@ -17,11 +17,11 @@ stages:
       --name run_orca
     deps:
     - nodes/get_3_h2o_trajectory/node-meta.json
-    - outputs/nodes/get_3_h2o_trajectory/reduced.gro
+    - nodes/get_3_h2o_trajectory/reduced.gro
     params:
     - run_orca
     outs:
-    - outputs/nodes/run_orca/frames
+    - nodes/run_orca/frames
     metrics:
     - nodes/run_orca/node-meta.json:
         cache: false

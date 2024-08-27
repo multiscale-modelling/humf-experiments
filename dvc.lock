@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  get_3_h2o_trajectory:
+    cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
+      get_3_h2o_trajectory
+    deps:
+    - path: data/h2o_trajectory
+      hash: md5
+      md5: 0aef0ee8c30b67d9b0192a4b2bac0d33.dir
+      size: 15927560
+      nfiles: 7
+    params:
+      params.yaml:
+        get_3_h2o_trajectory:
+          concatenate: 1
+          num_molecules: 3
+    outs:
+    - path: nodes/get_3_h2o_trajectory/node-meta.json
+      hash: md5
+      md5: 62928bc9e841c8da7202bef2ab161f88
+      size: 64
+    - path: nodes/get_3_h2o_trajectory/reduced.gro
+      hash: md5
+      md5: e27ca38ffbdf4d182b5c307375a719eb
+      size: 104554

@@ -3,7 +3,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --output=slurm/outputs/%j.out
 
-#SBATCH --mem=2G
+#SBATCH --mem=32G
 
 if ! ls | grep -qE '^pyproject\.toml$'; then
     echo "Error: sbatch was not run from the project root directory."
@@ -36,6 +36,7 @@ fi
 #fi
 # >>>
 
-module load gromacs
+#module load gromacs
 module load orca
+echo $LD_LIBRARY_PATH
 srun dvc repro
