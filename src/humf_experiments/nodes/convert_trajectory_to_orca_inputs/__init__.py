@@ -20,7 +20,7 @@ def run_which(command):
 def run_orca_on_file(orca_bin, file, outfile):
     print("starting orca process")
     with open(outfile, "w") as of:
-        subprocess.Popen([orca_bin, file], stdout=of, stderr=subprocess.STDOUT)
+        subprocess.check_call([orca_bin, file], stdout=of, stderr=subprocess.STDOUT)
 
 
 class ConvertTrajectoryToOrcaInputs(zn.Node):
