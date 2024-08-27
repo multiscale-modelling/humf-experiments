@@ -30,7 +30,8 @@ class ConvertTrajectoryToOrcaInputs(zn.Node):
     pal: str = zn.params()
     run_orca: bool = zn.params()
     every_nth_frame: int = zn.params()
-    gro_file: str = zn.params()
+
+    gro_file: str = zn.deps()
 
     output_dir: str = zop("frames/")
 

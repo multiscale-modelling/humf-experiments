@@ -1,6 +1,5 @@
 # pyright: reportAssignmentType=false
 
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -17,7 +16,7 @@ class NH2OTrajectory(zn.Node):
 
     h2o_trajectory_dir: str = zn.deps_path()
 
-    n_h2o_trajectory_dir: str = zop("n_h2o_trajectory/")
+    n_h2o_trajectory: str = zop("reduced.gro")
 
     def run(self):
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
@@ -38,6 +37,4 @@ class NH2OTrajectory(zn.Node):
                 ],
                 cwd=tempdir,
             )
-
-            os.makedirs(self.n_h2o_trajectory_dir, exist_ok=True)
-            shutil.copy(tempdir / "reduced.gro", self.n_h2o_trajectory_dir)
+            shutil.copy(tempdir / "reduced.gro", self.n_h2o_trajectory)
