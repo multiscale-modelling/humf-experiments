@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #SBATCH --mail-type=ALL
-#SBATCH --output=slurm_outputs/%j.out
+#SBATCH --output=slurm/outputs/%j.out
 
-if ! ls | grep -qE '^slurm_inputs$'; then
+if ! ls | grep -qE '^pyproject\.toml$'; then
     echo "Error: sbatch was not run from the project root directory."
     exit 1
 fi
