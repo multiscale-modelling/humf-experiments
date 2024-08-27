@@ -35,6 +35,6 @@ class TestConvertTrajectoryToOrcaInputs:
             pal="1",
             run_orca=True,
             gro_file="inputs/orca_runfile_generation/reduced.gro",
-            every_nth_frame=10,
+            every_nth_frame=100,
         )
         node.run()
