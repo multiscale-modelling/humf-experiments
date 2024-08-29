@@ -14,7 +14,7 @@ repos:
       - id: end-of-file-fixer
         exclude: node-meta\.json|zntrack\.json
       - id: trailing-whitespace
-        exclude: dvc\.lock
+        exclude: dvc\.lock|dvc\.yaml
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.2
     hooks:

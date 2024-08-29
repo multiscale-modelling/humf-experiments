@@ -24,7 +24,7 @@ stages:
       md5: e27ca38ffbdf4d182b5c307375a719eb
       size: 104554
   run_orca:
-    cmd: zntrack run
+    cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
       --name run_orca
     deps:
@@ -54,4 +54,27 @@ stages:
     - path: nodes/run_orca/node-meta.json
       hash: md5
       md5: e80d21140a4afc1a8a30e2584b61c70f
+      size: 64
+  create_dataset:
+    cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
+      --name create_dataset
+    deps:
+    - path: nodes/run_orca/frames
+      hash: md5
+      md5: bd7ecbfdf347fbe5f4eb9ad73ad9be16.dir
+      size: 103015302
+      nfiles: 736
+    - path: nodes/run_orca/node-meta.json
+      hash: md5
+      md5: e80d21140a4afc1a8a30e2584b61c70f
+      size: 64
+    outs:
+    - path: nodes/create_dataset/data
+      hash: md5
+      md5: 2d4c68bd1a1bb9aecd5b26361268899f.dir
+      size: 35886
+      nfiles: 1
+    - path: nodes/create_dataset/node-meta.json
+      hash: md5
+      md5: a56b7de2cbb68f913123fef95c0372b2
       size: 64

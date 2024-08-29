@@ -25,3 +25,14 @@ stages:
     metrics:
     - nodes/run_orca/node-meta.json:
         cache: false
+  create_dataset:
+    cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
+      --name create_dataset
+    deps:
+    - nodes/run_orca/frames
+    - nodes/run_orca/node-meta.json
+    outs:
+    - nodes/create_dataset/data
+    metrics:
+    - nodes/create_dataset/node-meta.json:
+        cache: false
