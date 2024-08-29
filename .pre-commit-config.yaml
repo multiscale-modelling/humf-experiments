@@ -12,7 +12,9 @@ repos:
       - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
+        exclude: node-meta\.json|zntrack\.json
       - id: trailing-whitespace
+        exclude: dvc\.lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.6.2
     hooks:
