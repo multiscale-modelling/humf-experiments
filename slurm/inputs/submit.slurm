@@ -5,23 +5,23 @@
 
 #SBATCH --mem=32G
 
-if ! ls | grep -qE '^pyproject\.toml$'; then
-    echo "Error: sbatch was not run from the project root directory."
-    exit 1
+if ! [ -f pyproject.toml ]; then
+	echo "Error: sbatch was not run from the project root directory."
+	exit 1
 fi
 
 # <<< git
-if ! [ -z "$(git status --porcelain)" ]; then
-    echo "Error: git status is not clear."
-    exit 1
-else
-    echo "Current commit hash:"
-    git rev-parse HEAD
+if [ -n "$(git status --porcelain)" ]; then
+	echo "Error: git status is not clear."
+	exit 1
 fi
+echo "Current commit hash:"
+git rev-parse HEAD
 # >>>
 
 # <<< poetry
-source $(poetry env info --path)/bin/activate
+# shellcheck disable=SC1091
+source "$(poetry env info --path)/bin/activate"
 # >>>
 
 # <<< dvc
@@ -38,4 +38,4 @@ source $(poetry env info --path)/bin/activate
 
 module load gromacs
 module load orca
-srun dvc repro
+srun python main.py

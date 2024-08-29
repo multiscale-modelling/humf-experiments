@@ -41,7 +41,7 @@ def main():
         # we just print the last node here.
         print(create_dataset)
 
-    project.build()
+    project.run()
 
 
 if __name__ == "__main__":
