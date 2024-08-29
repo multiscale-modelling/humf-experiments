@@ -8,3 +8,5 @@ run_orca:
     multiplicity: '1'
     pal: '1'
     run_orca: true
+train_model:
+    max_epochs: 10

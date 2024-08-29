@@ -12,7 +12,7 @@ stages:
     - nodes/get_3_h2o_trajectory/node-meta.json:
         cache: false
   run_orca:
-    cmd: zntrack run
+    cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
       --name run_orca
     deps:
@@ -35,4 +35,16 @@ stages:
     - nodes/create_dataset/data
     metrics:
     - nodes/create_dataset/node-meta.json:
+        cache: false
+  train_model:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name train_model
+    deps:
+    - nodes/create_dataset/data
+    - nodes/create_dataset/node-meta.json
+    params:
+    - train_model
+    outs:
+    - nodes/train_model/model.ckpt
+    metrics:
+    - nodes/train_model/node-meta.json:
         cache: false

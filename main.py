@@ -46,7 +46,7 @@ def main():
         # we just print the last node here.
         print(train_model)
 
-    project.run()
+    project.build()
 
 
 if __name__ == "__main__":
