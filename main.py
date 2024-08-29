@@ -13,7 +13,6 @@ from humf_experiments.nodes.train_model import TrainModel
 def main():
     project = zntrack.Project(
         initialize=False,
-        remove_existing_graph=True,
         automatic_node_names=False,
         magic_names=True,
     )
