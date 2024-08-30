@@ -1,3 +1,6 @@
+"""
+This is simplified_gro_reader.py. This module does exactly what is named after...
+"""
 import numpy as np
 import io
 from contextlib import contextmanager
@@ -193,9 +196,9 @@ def extract_all_coordinates_from_gro_file(grofile:str,itpfile:str|None, processe
 	return results_list
 
 #test feature
-
-#res=extract_all_coordinates_from_gro_file("/home/dullinger/cos_theta/test.gro", "/home/dullinger/cos_theta/jrd1_modified.itp")
 '''
+res=extract_all_coordinates_from_gro_file("/home/dullinger/cos_theta/test.gro", "/home/dullinger/cos_theta/jrd1_modified.itp")
+
 print(res)
 input("press enter")
 print(res[0])
@@ -209,5 +212,5 @@ print(res[0].cell)
 input("press enter")
 print(res[0].positions)
 
-print (len(res), maxframes)
+
 '''
