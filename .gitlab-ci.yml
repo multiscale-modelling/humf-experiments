@@ -6,8 +6,9 @@ workflow:
     - if: $CI_COMMIT_BRANCH
 
 variables:
-  PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
-  POETRY_HOME: $CI_PROJECT_DIR/.poetry
+  # PIP_CACHE_DIR: $CI_PROJECT_DIR/.cache/pip
+  POETRY_DIR: $CI_PROJECT_DIR/.poetry
+  VENV_DIR: $CI_PROJECT_DIR/.venv
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_SUBMODULE_FORCE_HTTPS: "true"
 
@@ -16,9 +17,9 @@ default:
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - .cache/pip
-      - .poetry
-      - .venv
+      # - $PIP_CACHE_DIR
+      - $POETRY_DIR
+      - $VENV_DIR
     policy: pull
   before_script:
     - source $($POETRY_HOME/bin/poetry env info --path)/bin/activate
@@ -33,12 +34,14 @@ poetry:
   rules:
     - changes:
         - poetry.lock
+    - when: manual
+      allow_failure: true
   cache:
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - .cache/pip
-      - .poetry
-      - .venv
+      # - $PIP_CACHE_DIR
+      - $POETRY_DIR
+      - $VENV_DIR
     policy: pull-push
   before_script:
     - echo Installing dependencies ...
