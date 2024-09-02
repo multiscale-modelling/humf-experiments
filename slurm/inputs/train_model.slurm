@@ -39,4 +39,4 @@ source "$(poetry env info --path)/bin/activate"
 # >>>
 
 nvidia-smi
-srun dvc repro train_model
+srun dvc repro train_model --force
