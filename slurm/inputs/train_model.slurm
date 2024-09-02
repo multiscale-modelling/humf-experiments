@@ -5,7 +5,7 @@
 
 #SBATCH --partition=a100
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-gpu=8
+#SBATCH --cpus-per-task=8
 
 if ! [ -f pyproject.toml ]; then
 	echo "Error: sbatch was not run from the project root directory."
