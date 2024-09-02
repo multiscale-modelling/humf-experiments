@@ -4,7 +4,8 @@
 #SBATCH --output=slurm/outputs/%j.out
 
 #SBATCH --partition=a100
-#SPATCH --gres=gpu:1
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-gpu=8
 
 if ! [ -f pyproject.toml ]; then
 	echo "Error: sbatch was not run from the project root directory."
