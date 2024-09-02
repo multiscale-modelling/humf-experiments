@@ -29,8 +29,8 @@ class TrainModel(zn.Node):
             trade_off=0.1,
         )
 
-        dataset = ASEDataset(self.data_root_dir)
-        dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+        dataset = ASEDataset(self.data_root_dir, force_reload=True)
+        dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=7)
 
         logger = WandbLogger(project="humf-experiments")
         trainer = L.Trainer(
