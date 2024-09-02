@@ -13,12 +13,12 @@ if ! [ -f pyproject.toml ]; then
 fi
 
 # <<< git
-#if [ -n "$(git status --porcelain)" ]; then
-#	echo "Error: git status is not clear."
-#	exit 1
-#fi
-#echo "Current commit hash:"
-#git rev-parse HEAD
+if [ -n "$(git status --porcelain)" ]; then
+	echo "Error: git status is not clear."
+	exit 1
+fi
+echo "Current commit hash:"
+git rev-parse HEAD
 # >>>
 
 # <<< poetry
