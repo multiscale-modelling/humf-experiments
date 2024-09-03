@@ -2,12 +2,8 @@ import os
 
 import numpy as np
 
-
-def hartree_to_kcal_per_mol(energy):
-    """
-    Convert an energy in Hartree to kcal/mol.
-    """
-    return energy * 627.50947406
+KCAL_MOL_PER_HARTREE = 627.50947406
+ANGSTROM_PER_BOHR = 0.529177208
 
 
 def find_energy_in_orca_output(filename):

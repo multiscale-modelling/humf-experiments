@@ -6,7 +6,11 @@ from pathlib import Path
 import zntrack as zn
 from ase import Atoms, io
 
-from humf_experiments.data.orca import orca_extract_all_frames_from_folder
+from humf_experiments.data.orca import (
+    ANGSTROM_PER_BOHR,
+    KCAL_MOL_PER_HARTREE,
+    orca_extract_all_frames_from_folder,
+)
 from humf_experiments.nodes.zntrack_utils import zop
 
 
@@ -23,10 +27,14 @@ class CreateOrcaDataset(zn.Node):
                 symbols=frame["atoms"],
                 positions=frame["positions"],
                 info={
-                    "energy": frame["energy"],
-                    "energy_total": frame["energy_total"],
-                    "forces": frame["forces"],
-                    "forces_total": frame["forces_total"],
+                    "energy": frame["energy"] * KCAL_MOL_PER_HARTREE,
+                    "energy_total": frame["energy_total"] * KCAL_MOL_PER_HARTREE,
+                    "forces": frame["forces"]
+                    * KCAL_MOL_PER_HARTREE
+                    / ANGSTROM_PER_BOHR,
+                    "forces_total": frame["forces_total"]
+                    * KCAL_MOL_PER_HARTREE
+                    / ANGSTROM_PER_BOHR,
                 },
             )
             atoms_list.append(atoms)
