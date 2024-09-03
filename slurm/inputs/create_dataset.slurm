@@ -5,37 +5,6 @@
 
 #SBATCH --mem=32G
 
-if ! [ -f pyproject.toml ]; then
-	echo "Error: sbatch was not run from the project root directory."
-	exit 1
-fi
-
-# <<< git
-if [ -n "$(git status --porcelain)" ]; then
-	echo "Error: git status is not clear."
-	exit 1
-fi
-echo "Current commit hash:"
-git rev-parse HEAD
-# >>>
-
-# <<< poetry
-# shellcheck disable=SC1091
-source "$(poetry env info --path)/bin/activate"
-# >>>
-
-# <<< dvc
-# if ! dvc data status -q; then
-# 	echo "Error: dvc data status is not clear."
-# 	exit 1
-# fi
-
-# if ! dvc status -q; then
-# 	echo "Error: dvc status is not clear."
-# 	exit 1
-# fi
-# >>>
-
 module load gromacs
 module load orca
 srun dvc repro create_dataset
