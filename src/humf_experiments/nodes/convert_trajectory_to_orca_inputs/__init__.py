@@ -86,7 +86,6 @@ class ConvertTrajectoryToOrcaInputs(zn.Node):
                         inp.write(orcacommand_full)
                         for atom_name, x, y, z in all_atoms:
                             inp.write(f"{atom_name} {float(x)*10.0} {float(y)*10.0} {float(z)*10.0}\n")
-                            print(f"{atom_name} {float(x)*10.0} {float(y)*10.0} {float(z)*10.0}\n")
                         inp.write("*")
                     if self.run_orca:
                         run_orca_on_file(
