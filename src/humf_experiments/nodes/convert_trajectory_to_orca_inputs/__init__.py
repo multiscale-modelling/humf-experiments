@@ -112,7 +112,7 @@ class ConvertTrajectoryToOrcaInputs(zn.Node):
                             inp.write(orcacommand)
                             #                        inp.write("! B3LYP def2-TZVP D3BJ EnGrad\n\n* xyz 0 1\n")
                             for atom_name, x, y, z in atoms:
-                                inp.write(f"{atom_name} {x*10.0} {y*10.0} {z*10.0}\n")
+                                inp.write(f"{atom_name} {float(x)*10.0} {float(y)*10.0} {float(z)*10.0}\n")
                             inp.write("*")
                         if self.run_orca:
                             run_orca_on_file(
