@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
+from humf.data.utils import has_nans
 from humf.layers.energy.lennard_jones_coulomb import LennardJonesCoulomb
 from humf.layers.interaction_sites.atom_centered_static import AtomCenteredStatic
 from humf.models.force_field import ForceField
@@ -46,6 +47,9 @@ class TrainModel(zn.Node):
         )
 
         dataset = ASEDataset(self.data_root_dir, force_reload=True)
+        for data in dataset:
+            if has_nans(data):
+                raise ValueError("Data contains NaNs")
         dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=7)
 
         logger = WandbLogger(project="humf-experiments")
