@@ -29,14 +29,14 @@ class TrainModel(zn.Node):
         lennard_jones_sites = AtomCenteredStatic(
             num_atoms_per_mol=3,
             num_params_per_atom=2,
-            initial_params=torch.tensor(initial_lj_params),
+            initial_params=torch.tensor(initial_lj_params, dtype=torch.float32),
         )
 
         initial_charges = np.array([[-1.0], [0.5], [0.5]])
         coulomb_sites = AtomCenteredStatic(
             num_atoms_per_mol=3,
             num_params_per_atom=1,
-            initial_params=torch.tensor(initial_charges),
+            initial_params=torch.tensor(initial_charges, dtype=torch.float32),
         )
 
         model = ForceField(
@@ -57,6 +57,7 @@ class TrainModel(zn.Node):
             log_every_n_steps=1,
             logger=logger,
             max_epochs=self.max_epochs,
+            detect_anomaly=True,
         )
         trainer.fit(model, dataloader)
         trainer.save_checkpoint(self.model_path)

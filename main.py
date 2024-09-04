@@ -37,7 +37,7 @@ def main():
         )
         train_model = TrainModel(
             data_root_dir=create_dataset.data_dir,
-            max_epochs=1000,
+            max_epochs=10,
         )
 
         # `magic_names=True` requires nodes to be assigned to a named variable, but
