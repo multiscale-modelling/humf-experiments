@@ -2,8 +2,8 @@ import os
 
 import numpy as np
 
-KCAL_MOL_PER_HARTREE = 627.50947406
-ANGSTROM_PER_BOHR = 0.529177208
+BOHR_IN_ANGSTROM = 0.529177208  # Angstrom
+HARTREE_IN_KCAL_PER_MOL = 627.50947406  # kcal/mol
 
 
 def find_energy_in_orca_output(filename):
