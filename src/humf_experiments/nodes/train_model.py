@@ -1,10 +1,12 @@
 # pyright: reportAssignmentType=false
 
 import lightning as L
+import numpy as np
 import torch
 import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
-from humf.layers.energy.tip3p_like import Tip3pLike
+from humf.layers.energy.lennard_jones_coulomb import LennardJonesCoulomb
+from humf.layers.interaction_sites.atom_centered_static import AtomCenteredStatic
 from humf.models.force_field import ForceField
 from lightning.pytorch.loggers import WandbLogger
 from torch_geometric.loader import DataLoader
@@ -23,8 +25,22 @@ class TrainModel(zn.Node):
         torch.set_float32_matmul_precision("high")
         L.seed_everything(42, workers=True)
 
+        initial_lj_params = np.array([[0.1521, 3.1507], [0.0, 1.0], [0.0, 1.0]])
+        lennard_jones_sites = AtomCenteredStatic(
+            num_atoms_per_mol=3,
+            num_params_per_atom=2,
+            initial_params=torch.tensor(initial_lj_params),
+        )
+
+        initial_charges = np.array([[-1.0], [0.5], [0.5]])
+        coulomb_sites = AtomCenteredStatic(
+            num_atoms_per_mol=3,
+            num_params_per_atom=1,
+            initial_params=torch.tensor(initial_charges),
+        )
+
         model = ForceField(
-            Tip3pLike(),
+            LennardJonesCoulomb(lennard_jones_sites, coulomb_sites),
             learning_rate=1e-3,
             trade_off=0.1,
         )
