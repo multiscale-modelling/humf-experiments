@@ -10,4 +10,4 @@ git rev-parse HEAD
 
 module load gromacs
 module load orca
-srun dvc repro create_dataset --force
+srun dvc repro create_dataset
