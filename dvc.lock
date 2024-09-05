@@ -93,13 +93,19 @@ stages:
     params:
       params.yaml:
         train_model:
-          max_epochs: 1000
+          max_epochs: 10
     outs:
-    - path: nodes/train_model/model.ckpt
+    - path: nodes/train_model/logs
       hash: md5
-      md5: c3721b07cd5c575618cbc9d9fd41e699
-      size: 4992
+      md5: 3049d55acc3a3894d80faf1895e17fff.dir
+      size: 13930
+      nfiles: 2
+    - path: nodes/train_model/models
+      hash: md5
+      md5: 1fa9dfea97e3fc5ad938bdd09bc31d37.dir
+      size: 35051
+      nfiles: 5
     - path: nodes/train_model/node-meta.json
       hash: md5
-      md5: bf7efcadebf871dc323d69f09829eba7
+      md5: 800d32f8c554647392f0c9c813bf9fc6
       size: 64

@@ -9,4 +9,4 @@ run_orca:
     pal: '1'
     run_orca: true
 train_model:
-    max_epochs: 1000
+    max_epochs: 10

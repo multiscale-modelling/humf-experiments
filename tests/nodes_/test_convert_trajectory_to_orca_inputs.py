@@ -1,14 +1,8 @@
 # pyright: reportCallIssue=false
 
-import shutil
-
 from humf_experiments.nodes.convert_trajectory_to_orca_inputs import (
     ConvertTrajectoryToOrcaInputs,
 )
-
-
-def orca_is_available():
-    return shutil.which("orca") is not None
 
 
 class TestConvertTrajectoryToOrcaInputs:

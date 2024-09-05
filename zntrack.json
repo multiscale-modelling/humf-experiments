@@ -82,9 +82,13 @@
                 "item": null
             }
         },
-        "model_path": {
+        "log_dir": {
             "_type": "pathlib.Path",
-            "value": "$nwd$/model.ckpt"
+            "value": "$nwd$/logs"
+        },
+        "model_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/models"
         },
         "nwd": {
             "_type": "pathlib.Path",

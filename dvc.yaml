@@ -44,7 +44,8 @@ stages:
     params:
     - train_model
     outs:
-    - nodes/train_model/model.ckpt
+    - nodes/train_model/logs
+    - nodes/train_model/models
     metrics:
     - nodes/train_model/node-meta.json:
         cache: false
