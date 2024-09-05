@@ -61,7 +61,6 @@ class TrainModel(zn.Node):
             log_every_n_steps=1,
             logger=logger,
             max_epochs=self.max_epochs,
-            detect_anomaly=True,
         )
         trainer.fit(model, dataloader)
         trainer.save_checkpoint(self.model_path)
