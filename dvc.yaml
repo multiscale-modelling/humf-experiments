@@ -7,6 +7,8 @@ stages:
     params:
     - get_3_h2o_trajectory
     outs:
+    - nodes/get_3_h2o_trajectory/dumped_forces.txt
+    - nodes/get_3_h2o_trajectory/energy.xvg
     - nodes/get_3_h2o_trajectory/reduced.gro
     metrics:
     - nodes/get_3_h2o_trajectory/node-meta.json:
@@ -16,6 +18,8 @@ stages:
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
       --name run_orca
     deps:
+    - nodes/get_3_h2o_trajectory/dumped_forces.txt
+    - nodes/get_3_h2o_trajectory/energy.xvg
     - nodes/get_3_h2o_trajectory/node-meta.json
     - nodes/get_3_h2o_trajectory/reduced.gro
     params:

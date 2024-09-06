@@ -1,9 +1,17 @@
 {
     "get_3_h2o_trajectory": {
         "h2o_trajectory_dir": "data/h2o_trajectory/",
+        "n_h2o_potential_energy": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/energy.xvg"
+        },
         "n_h2o_trajectory": {
             "_type": "pathlib.Path",
             "value": "$nwd$/reduced.gro"
+        },
+        "n_h2o_trajectory_forces": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dumped_forces.txt"
         },
         "nwd": {
             "_type": "pathlib.Path",
