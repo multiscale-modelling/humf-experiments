@@ -71,5 +71,5 @@ def find_splitstring(filename):
                 trythis=line.split(sep=".trr")[0].split()[-1]
                 return trythis+".trr"
 
-print(find_splitstring("/home/dullinger/work_in_progress/recent_humf/humf/tests/testdata/gmx_dataset/raw/dumped_forces.txt"))
+#print(find_splitstring("/home/dullinger/work_in_progress/recent_humf/humf/tests/testdata/gmx_dataset/raw/dumped_forces.txt"))
 #v=return_forces_from_gmx_dump_of_trj("/home/dullinger/work_in_progress/recent_humf/humf/tests/testdata/gmx_dataset/raw/dumped_forces.txt", "tmp.trr")
