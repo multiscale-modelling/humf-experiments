@@ -1,10 +1,11 @@
 # pyright: reportAssignmentType=false
 
+import os
 import shutil
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import os
+
 import zntrack as zn
 
 from humf_experiments.nodes.zntrack_utils import zop
