@@ -1,12 +1,13 @@
 # pyright: reportAssignmentType=false
 
+import os
 import shutil
 import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
 import zntrack as zn
-import os
+
 from humf_experiments.nodes.zntrack_utils import zop
 
 
@@ -19,7 +20,6 @@ class NH2OTrajectory(zn.Node):
     n_h2o_trajectory: str = zop("reduced.gro")
     n_h2o_potential_energy: str = zop("energy.xvg")
     n_h2o_trajectory_forces: str = zop("dumped_forces.txt")
-
 
     def run(self):
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
@@ -41,8 +41,8 @@ class NH2OTrajectory(zn.Node):
                 cwd=tempdir,
             )
             print("here")
-            #check if reduced.gro, energy.xvg and  dumped_forces.txt exist and copy them to the output directory
-            #check if the files exist in tempdir
+            # check if reduced.gro, energy.xvg and  dumped_forces.txt exist and copy them to the output directory
+            # check if the files exist in tempdir
             assert os.path.isfile(tempdir / "reduced.gro")
             assert os.path.isfile(tempdir / "energy.xvg")
             assert os.path.isfile(tempdir / "dumped_forces.txt")
