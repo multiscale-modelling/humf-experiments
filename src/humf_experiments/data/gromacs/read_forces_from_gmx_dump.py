@@ -1,5 +1,3 @@
-### the following is directly copied from the old dataloader ondisk_gmx.py which does everything in one go and combines the resutls
-# now only the forces are desired here you go:
 import io
 
 import pandas as pd

@@ -1,4 +1,4 @@
-import torch
+import numpy as np
 
 
 def read_xvg_2_column(filename):
@@ -14,4 +14,4 @@ def read_xvg_2_column(filename):
             if "#" not in line and "@" not in line:
                 t.append(float(line.split()[0]))
                 e.append(float(line.split()[1]))
-    return torch.tensor(t), torch.tensor(e)
+    return np.array(t), np.array(e)
