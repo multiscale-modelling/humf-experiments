@@ -5,7 +5,9 @@ import shutil
 
 import pytest
 
-from humf_experiments.nodes.n_h2o_trajectory_copy_reintroduced_rerun import NH2OTrajectory
+from humf_experiments.nodes.n_h2o_trajectory_copy_reintroduced_rerun import (
+    NH2OTrajectory,
+)
 
 
 @pytest.fixture(scope="module", autouse=True)
