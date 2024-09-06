@@ -109,3 +109,40 @@ stages:
       hash: md5
       md5: 800d32f8c554647392f0c9c813bf9fc6
       size: 64
+  evaluate_models:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_models
+    deps:
+    - path: nodes/create_dataset/data
+      hash: md5
+      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
+      size: 40197
+      nfiles: 1
+    - path: nodes/create_dataset/node-meta.json
+      hash: md5
+      md5: 0de915c05d04eca868654725aef0aeba
+      size: 64
+    - path: nodes/train_model/logs
+      hash: md5
+      md5: 3049d55acc3a3894d80faf1895e17fff.dir
+      size: 13930
+      nfiles: 2
+    - path: nodes/train_model/models
+      hash: md5
+      md5: 1fa9dfea97e3fc5ad938bdd09bc31d37.dir
+      size: 35051
+      nfiles: 5
+    - path: nodes/train_model/node-meta.json
+      hash: md5
+      md5: 800d32f8c554647392f0c9c813bf9fc6
+      size: 64
+    outs:
+    - path: nodes/evaluate_models/node-meta.json
+      hash: md5
+      md5: ed2d7abfd3cd68db6a6015c5ec2dbd62
+      size: 64
+    - path: nodes/evaluate_models/results
+      hash: md5
+      md5: 1d3e552557fc364d49a822dc7644f2a0.dir
+      size: 45292256
+      nfiles: 15

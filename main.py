@@ -6,6 +6,7 @@ from humf_experiments.nodes.convert_trajectory_to_orca_inputs import (
     ConvertTrajectoryToOrcaInputs,
 )
 from humf_experiments.nodes.create_orca_dataset import CreateOrcaDataset
+from humf_experiments.nodes.evaluate_models import EvaluateModels
 from humf_experiments.nodes.n_h2o_trajectory import NH2OTrajectory
 from humf_experiments.nodes.train_model import TrainModel
 
@@ -39,11 +40,15 @@ def main():
             data_root_dir=create_dataset.data_dir,
             max_epochs=10,
         )
+        evaluate_models = EvaluateModels(
+            data_root_dir=create_dataset.data_dir,
+            model_dir=train_model.model_dir,
+        )
 
         # `magic_names=True` requires nodes to be assigned to a named variable, but
         # pre-commit using Ruff fails if there are unused variables. To avoid this,
         # we just print the last node here.
-        print(train_model)
+        print(f"[Ignore this line. {evaluate_models}]")
 
     project.build()
 

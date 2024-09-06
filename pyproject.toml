@@ -15,7 +15,7 @@ python = "~3.11"
 humf = { path = "submodules/humf", develop = true }
 zntrack = "^0.7.3"
 ase = "^3.23.0"
-wandb = "^0.17.8"
+plotly = "^5.24.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"

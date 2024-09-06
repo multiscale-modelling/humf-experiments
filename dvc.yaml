@@ -49,3 +49,17 @@ stages:
     metrics:
     - nodes/train_model/node-meta.json:
         cache: false
+  evaluate_models:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_models
+    deps:
+    - nodes/create_dataset/data
+    - nodes/create_dataset/node-meta.json
+    - nodes/train_model/logs
+    - nodes/train_model/models
+    - nodes/train_model/node-meta.json
+    outs:
+    - nodes/evaluate_models/results
+    metrics:
+    - nodes/evaluate_models/node-meta.json:
+        cache: false
