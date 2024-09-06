@@ -6,18 +6,26 @@ stages:
     deps:
     - path: data/h2o_trajectory
       hash: md5
-      md5: 0aef0ee8c30b67d9b0192a4b2bac0d33.dir
-      size: 15927560
-      nfiles: 7
+      md5: 5d2e9a1c120106778f1e85836ea44244.dir
+      size: 15928343
+      nfiles: 8
     params:
       params.yaml:
         get_3_h2o_trajectory:
           concatenate: 1
           num_molecules: 3
     outs:
+    - path: nodes/get_3_h2o_trajectory/dumped_forces.txt
+      hash: md5
+      md5: b80bef38e5f478188bd7f7c5722e51dc
+      size: 181994
+    - path: nodes/get_3_h2o_trajectory/energy.xvg
+      hash: md5
+      md5: 9a42533aafb0e5ee5880da085302002c
+      size: 6193
     - path: nodes/get_3_h2o_trajectory/node-meta.json
       hash: md5
-      md5: 6faeb42e0fef02590970571a247b6d2f
+      md5: af78d0b9697a8741a16b07997e129aad
       size: 64
     - path: nodes/get_3_h2o_trajectory/reduced.gro
       hash: md5
