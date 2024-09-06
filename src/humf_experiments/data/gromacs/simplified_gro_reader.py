@@ -231,7 +231,7 @@ def extract_all_coordinates_from_gro_file(
     pool = multiprocessing.Pool(processes=processes)
     results = pool.map(
         extract_coordinates_parallel,
-        [(grofile, splitstring, frame, charges) for frame in range(1, maxframes)],
+        [(grofile, splitstring, frame, charges) for frame in range(1, maxframes + 1)],
     )
     pool.close()
     pool.join()

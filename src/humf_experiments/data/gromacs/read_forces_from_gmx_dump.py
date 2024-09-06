@@ -37,7 +37,8 @@ def read_dumped_trr(filename, headerstr):
             for s in range(1, len(forces_sections))
         ]
         forces_data_df = pd.DataFrame(
-            forces_data, columns=["timestep", "atoms_forces_df", "time"]
+            forces_data,
+            columns=["timestep", "atoms_forces_df", "time"],  # type:ignore
         )
     return forces_data_df
 
@@ -52,6 +53,7 @@ def return_forces_from_gmx_dump_of_trj(dumpfilename, splitstring):
     or use the function find_splitstring to find it
     """
     if splitstring is None:
+        splitstring = "tmp.trr"
         print("using default tmp.trr as the splitstring")
         print(
             "if this is not the correct string use the function find_splitstring to find it"
