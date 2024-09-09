@@ -5,7 +5,7 @@ from pathlib import Path
 
 import scipy.constants as c
 import zntrack as zn
-from ase import io
+from ase import Atoms, io
 
 from humf_experiments.data.gromacs.read_2_column_xvg import read_xvg_2_column
 from humf_experiments.data.gromacs.read_forces_from_gmx_dump import (
@@ -30,19 +30,25 @@ class CreateGromacsDataset(zn.Node):
         forces_df = return_forces_from_gmx_dump_of_trj(
             self.n_h2o_trajectory_forces, splitstring=None
         )
-        atoms_list = extract_all_coordinates_from_gro_file(
+        trajectory = extract_all_coordinates_from_gro_file(
             self.n_h2o_trajectory, itpfile=None
         )
-        assert len(times) == len(energies) == len(forces_df) == len(atoms_list)
+        assert len(times) == len(energies) == len(forces_df) == len(trajectory)
 
-        for atoms, energy, atoms_forces_df in zip(
-            atoms_list, energies, forces_df["atoms_forces_df"]
+        atoms_list = []
+        for frame, energy, atoms_forces_df in zip(
+            trajectory, energies, forces_df["atoms_forces_df"]
         ):
-            atoms.positions = atoms.positions * NANOMETER_IN_ANGSTROM
-            atoms.info["energy"] = energy / c.calorie
-            atoms.info["forces"] = atoms_forces_df[["fx", "fy", "fz"]].to_numpy() / (
-                c.calorie * NANOMETER_IN_ANGSTROM
+            atoms = Atoms(
+                symbols=frame.symbols,
+                positions=frame.positions * NANOMETER_IN_ANGSTROM,
+                info={
+                    "energy": energy / c.calorie,
+                    "forces": atoms_forces_df[["fx", "fy", "fz"]].to_numpy()
+                    / (c.calorie * NANOMETER_IN_ANGSTROM),
+                },
             )
+            atoms_list.append(atoms)
 
         raw_dir = Path(self.data_dir) / "raw/"
         os.makedirs(raw_dir, exist_ok=True)
