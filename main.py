@@ -21,10 +21,18 @@ def main():
             concatenate=1,
             h2o_trajectory_dir="data/h2o_trajectory/",
         )
-        CreateGromacsDataset(
+        create_gromacs_dataset = CreateGromacsDataset(
             n_h2o_trajectory=get_3_h2o_trajectory.n_h2o_trajectory,
             n_h2o_potential_energy=get_3_h2o_trajectory.n_h2o_potential_energy,
             n_h2o_trajectory_forces=get_3_h2o_trajectory.n_h2o_trajectory_forces,
+        )
+        fit_model_to_gromacs_data = TrainModel(
+            data_root_dir=create_gromacs_dataset.data_dir,
+            max_epochs=1000,
+        )
+        EvaluateModels(
+            data_root_dir=create_gromacs_dataset.data_dir,
+            model_dir=fit_model_to_gromacs_data.model_dir,
         )
         run_orca = ConvertTrajectoryToOrcaInputs(
             method_and_basisset="B3LYP def2-TZVP D3BJ",
@@ -40,7 +48,7 @@ def main():
         )
         train_model = TrainModel(
             data_root_dir=create_orca_dataset.data_dir,
-            max_epochs=10,
+            max_epochs=1000,
         )
         EvaluateModels(
             data_root_dir=create_orca_dataset.data_dir,

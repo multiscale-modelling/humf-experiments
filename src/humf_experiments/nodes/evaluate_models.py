@@ -1,4 +1,5 @@
 # pyright: reportAssignmentType=false
+
 from pathlib import Path
 
 import pandas as pd
@@ -25,11 +26,12 @@ class EvaluateModels(zn.Node):
         ljc_water = create_ljc_water()
 
         for model_path in Path(self.model_dir).iterdir():
+            model_results_dir = Path(self.results_dir) / model_path.stem
+            model_results_dir.mkdir(parents=True, exist_ok=True)
+
             model = ForceField.load_from_checkpoint(
                 model_path, energy_model=ljc_water
             ).eval()
-            model_results_dir = Path(self.results_dir) / model_path.stem
-            model_results_dir.mkdir(parents=True, exist_ok=True)
 
             with open(model_results_dir / "params.txt", "w") as f:
                 for name, params in model.named_parameters():
