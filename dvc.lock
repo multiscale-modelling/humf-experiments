@@ -1,44 +1,90 @@
 schema: '2.0'
 stages:
-  get_3_h2o_trajectory:
+  NH2OTrajectory:
     cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
-      get_3_h2o_trajectory
+      NH2OTrajectory
     deps:
     - path: data/h2o_trajectory
       hash: md5
-      md5: 0aef0ee8c30b67d9b0192a4b2bac0d33.dir
-      size: 15927560
-      nfiles: 7
+      md5: 5d2e9a1c120106778f1e85836ea44244.dir
+      size: 15928343
+      nfiles: 8
     params:
       params.yaml:
-        get_3_h2o_trajectory:
+        NH2OTrajectory:
           concatenate: 1
           num_molecules: 3
     outs:
-    - path: nodes/get_3_h2o_trajectory/node-meta.json
+    - path: nodes/NH2OTrajectory/dumped_forces.txt
       hash: md5
-      md5: 6faeb42e0fef02590970571a247b6d2f
+      md5: b80bef38e5f478188bd7f7c5722e51dc
+      size: 181994
+    - path: nodes/NH2OTrajectory/energy.xvg
+      hash: md5
+      md5: 9413bc8ddd89d6678614f1f77cfba637
+      size: 6215
+    - path: nodes/NH2OTrajectory/node-meta.json
+      hash: md5
+      md5: 9e56571979d171304504f06dfa63fc98
       size: 64
-    - path: nodes/get_3_h2o_trajectory/reduced.gro
+    - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
       md5: e27ca38ffbdf4d182b5c307375a719eb
       size: 104554
-  run_orca:
+  CreateGromacsDataset:
+    cmd: zntrack run humf_experiments.nodes.create_gromacs_dataset.CreateGromacsDataset
+      --name CreateGromacsDataset
+    deps:
+    - path: nodes/NH2OTrajectory/dumped_forces.txt
+      hash: md5
+      md5: b80bef38e5f478188bd7f7c5722e51dc
+      size: 181994
+    - path: nodes/NH2OTrajectory/energy.xvg
+      hash: md5
+      md5: 9413bc8ddd89d6678614f1f77cfba637
+      size: 6215
+    - path: nodes/NH2OTrajectory/node-meta.json
+      hash: md5
+      md5: 9e56571979d171304504f06dfa63fc98
+      size: 64
+    - path: nodes/NH2OTrajectory/reduced.gro
+      hash: md5
+      md5: e27ca38ffbdf4d182b5c307375a719eb
+      size: 104554
+    outs:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: f805ff3a1e0ae35c41ce276059fa66c8.dir
+      size: 287853
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: ab0619b18d0e3a68da34ae83fcf4ebdf
+      size: 64
+  ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
-      --name run_orca
+      --name ConvertTrajectoryToOrcaInputs
     deps:
-    - path: nodes/get_3_h2o_trajectory/node-meta.json
+    - path: nodes/NH2OTrajectory/dumped_forces.txt
       hash: md5
-      md5: 6faeb42e0fef02590970571a247b6d2f
+      md5: b80bef38e5f478188bd7f7c5722e51dc
+      size: 181994
+    - path: nodes/NH2OTrajectory/energy.xvg
+      hash: md5
+      md5: 9413bc8ddd89d6678614f1f77cfba637
+      size: 6215
+    - path: nodes/NH2OTrajectory/node-meta.json
+      hash: md5
+      md5: 9e56571979d171304504f06dfa63fc98
       size: 64
-    - path: nodes/get_3_h2o_trajectory/reduced.gro
+    - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
       md5: e27ca38ffbdf4d182b5c307375a719eb
       size: 104554
     params:
       params.yaml:
-        run_orca:
+        ConvertTrajectoryToOrcaInputs:
           charge: '0'
           every_nth_frame: 10
           method_and_basisset: B3LYP def2-TZVP D3BJ
@@ -46,68 +92,37 @@ stages:
           pal: '1'
           run_orca: true
     outs:
-    - path: nodes/run_orca/frames
+    - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: 827da782a40bded0f648e8dd39a5e65d.dir
-      size: 102763543
+      md5: f02aff4fdf629e48aae0a106cf32bd51.dir
+      size: 102774217
       nfiles: 736
-    - path: nodes/run_orca/node-meta.json
+    - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: c6180cb29b97244bb4d9886b6825067c
+      md5: 39cd4872979cca729a9bdf17f19b4e5e
       size: 64
-  create_dataset:
+  CreateOrcaDataset:
     cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
-      --name create_dataset
+      --name CreateOrcaDataset
     deps:
-    - path: nodes/run_orca/frames
+    - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: 827da782a40bded0f648e8dd39a5e65d.dir
-      size: 102763543
+      md5: f02aff4fdf629e48aae0a106cf32bd51.dir
+      size: 102774217
       nfiles: 736
-    - path: nodes/run_orca/node-meta.json
+    - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: c6180cb29b97244bb4d9886b6825067c
+      md5: 39cd4872979cca729a9bdf17f19b4e5e
       size: 64
     outs:
-    - path: nodes/create_dataset/data
+    - path: nodes/CreateOrcaDataset/data
       hash: md5
       md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
       size: 40197
       nfiles: 1
-    - path: nodes/create_dataset/node-meta.json
+    - path: nodes/CreateOrcaDataset/node-meta.json
       hash: md5
-      md5: 0de915c05d04eca868654725aef0aeba
-      size: 64
-  train_model:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name train_model
-    deps:
-    - path: nodes/create_dataset/data
-      hash: md5
-      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
-      size: 40197
-      nfiles: 1
-    - path: nodes/create_dataset/node-meta.json
-      hash: md5
-      md5: 0de915c05d04eca868654725aef0aeba
-      size: 64
-    params:
-      params.yaml:
-        train_model:
-          max_epochs: 10
-    outs:
-    - path: nodes/train_model/logs
-      hash: md5
-      md5: 3049d55acc3a3894d80faf1895e17fff.dir
-      size: 13930
-      nfiles: 2
-    - path: nodes/train_model/models
-      hash: md5
-      md5: 1fa9dfea97e3fc5ad938bdd09bc31d37.dir
-      size: 35051
-      nfiles: 5
-    - path: nodes/train_model/node-meta.json
-      hash: md5
-      md5: 800d32f8c554647392f0c9c813bf9fc6
+      md5: 13d9344f000198565f3511aa82eebbbc
       size: 64
   evaluate_models:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name

@@ -13,7 +13,7 @@ class TestConvertTrajectoryToOrcaInputs:
             charge="0",
             pal="1",
             run_orca=False,
-            gro_file="inputs/orca_runfile_generation/reduced.gro",
+            gro_file="inputs/convert_trajectory_to_orca_inputs/reduced.gro",
             every_nth_frame=10,
         )
         node.run()

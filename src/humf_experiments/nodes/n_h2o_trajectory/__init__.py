@@ -1,5 +1,6 @@
 # pyright: reportAssignmentType=false
 
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -17,8 +18,11 @@ class NH2OTrajectory(zn.Node):
     h2o_trajectory_dir: str = zn.deps_path()
 
     n_h2o_trajectory: str = zop("reduced.gro")
+    n_h2o_potential_energy: str = zop("energy.xvg")
+    n_h2o_trajectory_forces: str = zop("dumped_forces.txt")
 
     def run(self):
+        os.makedirs(self.nwd, exist_ok=True)
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
         trajectory_dir = Path(self.h2o_trajectory_dir).resolve()
         assert trajectory_dir.is_dir()
@@ -37,4 +41,12 @@ class NH2OTrajectory(zn.Node):
                 ],
                 cwd=tempdir,
             )
+            print("here")
+            # check if reduced.gro, energy.xvg and  dumped_forces.txt exist and copy them to the output directory
+            # check if the files exist in tempdir
+            assert os.path.isfile(tempdir / "reduced.gro")
+            assert os.path.isfile(tempdir / "energy.xvg")
+            assert os.path.isfile(tempdir / "dumped_forces.txt")
+            shutil.copy(tempdir / "energy.xvg", self.n_h2o_potential_energy)
+            shutil.copy(tempdir / "dumped_forces.txt", self.n_h2o_trajectory_forces)
             shutil.copy(tempdir / "reduced.gro", self.n_h2o_trajectory)

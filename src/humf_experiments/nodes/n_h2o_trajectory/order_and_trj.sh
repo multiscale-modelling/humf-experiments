@@ -41,3 +41,8 @@ ls reduced_*.xtc | xargs rm
 ls *tmp.ndx | xargs rm
 rm reduced.xtc
 mv reduced_times.gro reduced.gro
+
+gmx grompp -f ${datafolder}/nvt_rerun.mdp -c reduced.gro -o tmp -p current_system.top
+gmx mdrun -deffnm tmp -rerun reduced.gro
+echo "Potential" | gmx energy -f tmp.edr
+gmx dump -f tmp.trr > dumped_forces.txt
