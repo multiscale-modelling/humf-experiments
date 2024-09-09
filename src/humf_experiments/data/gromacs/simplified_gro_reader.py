@@ -5,6 +5,8 @@ from contextlib import contextmanager
 import numpy as np
 from ase import Atom, Atoms
 
+NANOMETER_IN_ANGSTROM = 10.0
+
 
 @contextmanager  # for things that are used in a "with" environment!
 def smart_open(file, mode):

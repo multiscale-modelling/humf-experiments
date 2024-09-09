@@ -1,12 +1,12 @@
-get_3_h2o_trajectory:
-    concatenate: 1
-    num_molecules: 3
-run_orca:
+ConvertTrajectoryToOrcaInputs:
     charge: '0'
     every_nth_frame: 10
     method_and_basisset: B3LYP def2-TZVP D3BJ
     multiplicity: '1'
     pal: '1'
     run_orca: true
-train_model:
+NH2OTrajectory:
+    concatenate: 1
+    num_molecules: 3
+TrainModel:
     max_epochs: 10
