@@ -1,51 +1,68 @@
 stages:
-  get_3_h2o_trajectory:
+  NH2OTrajectory:
     cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
-      get_3_h2o_trajectory
+      NH2OTrajectory
     deps:
     - data/h2o_trajectory
     params:
-    - get_3_h2o_trajectory
+    - NH2OTrajectory
     outs:
-    - nodes/get_3_h2o_trajectory/reduced.gro
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/reduced.gro
     metrics:
-    - nodes/get_3_h2o_trajectory/node-meta.json:
+    - nodes/NH2OTrajectory/node-meta.json:
         cache: false
-  run_orca:
+  CreateGromacsDataset:
+    cmd: zntrack run humf_experiments.nodes.create_gromacs_dataset.CreateGromacsDataset
+      --name CreateGromacsDataset
+    deps:
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/node-meta.json
+    - nodes/NH2OTrajectory/reduced.gro
+    outs:
+    - nodes/CreateGromacsDataset/data
+    metrics:
+    - nodes/CreateGromacsDataset/node-meta.json:
+        cache: false
+  ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
-      --name run_orca
+      --name ConvertTrajectoryToOrcaInputs
     deps:
-    - nodes/get_3_h2o_trajectory/node-meta.json
-    - nodes/get_3_h2o_trajectory/reduced.gro
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/node-meta.json
+    - nodes/NH2OTrajectory/reduced.gro
     params:
-    - run_orca
+    - ConvertTrajectoryToOrcaInputs
     outs:
-    - nodes/run_orca/frames
+    - nodes/ConvertTrajectoryToOrcaInputs/frames
     metrics:
-    - nodes/run_orca/node-meta.json:
+    - nodes/ConvertTrajectoryToOrcaInputs/node-meta.json:
         cache: false
-  create_dataset:
+  CreateOrcaDataset:
     cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
-      --name create_dataset
+      --name CreateOrcaDataset
     deps:
-    - nodes/run_orca/frames
-    - nodes/run_orca/node-meta.json
+    - nodes/ConvertTrajectoryToOrcaInputs/frames
+    - nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
     outs:
-    - nodes/create_dataset/data
+    - nodes/CreateOrcaDataset/data
     metrics:
-    - nodes/create_dataset/node-meta.json:
+    - nodes/CreateOrcaDataset/node-meta.json:
         cache: false
-  train_model:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name train_model
+  TrainModel:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
     deps:
-    - nodes/create_dataset/data
-    - nodes/create_dataset/node-meta.json
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
     params:
-    - train_model
+    - TrainModel
     outs:
-    - nodes/train_model/logs
-    - nodes/train_model/models
+    - nodes/TrainModel/logs
+    - nodes/TrainModel/models
     metrics:
-    - nodes/train_model/node-meta.json:
+    - nodes/TrainModel/node-meta.json:
         cache: false

@@ -1,16 +1,85 @@
 {
-    "get_3_h2o_trajectory": {
+    "NH2OTrajectory": {
         "h2o_trajectory_dir": "data/h2o_trajectory/",
+        "n_h2o_potential_energy": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/energy.xvg"
+        },
         "n_h2o_trajectory": {
             "_type": "pathlib.Path",
             "value": "$nwd$/reduced.gro"
         },
+        "n_h2o_trajectory_forces": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dumped_forces.txt"
+        },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/get_3_h2o_trajectory"
+            "value": "nodes/NH2OTrajectory"
         }
     },
-    "run_orca": {
+    "CreateGromacsDataset": {
+        "data_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/data"
+        },
+        "n_h2o_potential_energy": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "humf_experiments.nodes.n_h2o_trajectory",
+                        "cls": "NH2OTrajectory",
+                        "name": "NH2OTrajectory",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "n_h2o_potential_energy",
+                "item": null
+            }
+        },
+        "n_h2o_trajectory": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "humf_experiments.nodes.n_h2o_trajectory",
+                        "cls": "NH2OTrajectory",
+                        "name": "NH2OTrajectory",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "n_h2o_trajectory",
+                "item": null
+            }
+        },
+        "n_h2o_trajectory_forces": {
+            "_type": "znflow.Connection",
+            "value": {
+                "instance": {
+                    "_type": "zntrack.Node",
+                    "value": {
+                        "module": "humf_experiments.nodes.n_h2o_trajectory",
+                        "cls": "NH2OTrajectory",
+                        "name": "NH2OTrajectory",
+                        "remote": null,
+                        "rev": null
+                    }
+                },
+                "attribute": "n_h2o_trajectory_forces",
+                "item": null
+            }
+        },
+        "nwd": {
+            "_type": "pathlib.Path",
+            "value": "nodes/CreateGromacsDataset"
+        }
+    },
+    "ConvertTrajectoryToOrcaInputs": {
         "gro_file": {
             "_type": "znflow.Connection",
             "value": {
@@ -19,7 +88,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.n_h2o_trajectory",
                         "cls": "NH2OTrajectory",
-                        "name": "get_3_h2o_trajectory",
+                        "name": "NH2OTrajectory",
                         "remote": null,
                         "rev": null
                     }
@@ -34,10 +103,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/run_orca"
+            "value": "nodes/ConvertTrajectoryToOrcaInputs"
         }
     },
-    "create_dataset": {
+    "CreateOrcaDataset": {
         "data_dir": {
             "_type": "pathlib.Path",
             "value": "$nwd$/data"
@@ -50,7 +119,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.convert_trajectory_to_orca_inputs",
                         "cls": "ConvertTrajectoryToOrcaInputs",
-                        "name": "run_orca",
+                        "name": "ConvertTrajectoryToOrcaInputs",
                         "remote": null,
                         "rev": null
                     }
@@ -61,10 +130,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/create_dataset"
+            "value": "nodes/CreateOrcaDataset"
         }
     },
-    "train_model": {
+    "TrainModel": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -73,7 +142,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.create_orca_dataset",
                         "cls": "CreateOrcaDataset",
-                        "name": "create_dataset",
+                        "name": "CreateOrcaDataset",
                         "remote": null,
                         "rev": null
                     }
@@ -92,7 +161,7 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/train_model"
+            "value": "nodes/TrainModel"
         }
     }
 }

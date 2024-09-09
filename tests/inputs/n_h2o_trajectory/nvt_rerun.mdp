@@ -1,0 +1,41 @@
+integrator		= md
+nsteps                  =  1100000
+nstlist                 = 20 ; 20
+nstcomm                 = 50
+nstpcouple= 10
+dt			= 0.001
+nstxtcout		= 1
+nstfout=		1
+nstcalcenergy		= 1
+nstenergy= 		1
+cutoff-scheme		= Verlet
+coulombtype 		= cutoff ;
+DispCorr		= EnerPres
+tcoupl			= v-rescale; berendsen
+tc-grps			= system
+tau-t			= 1.0
+ref-t			= 300
+
+pcoupl			= no;  Parrinello-Rahman
+pcoupltype		= isotropic
+tau-p			= 1.0
+ref-p			= 1.0
+compressibility		=    4.5e-5  ; water ; 300K ; todo 200K
+
+gen-vel			=  no
+
+constraints		= none; all-bonds ;h-angles
+constraint-algorithm	= LINCS
+lincs-order		= 4
+lincs-iter		= 2
+verlet-buffer-tolerance = 0.0001
+
+rlist =1.2
+rcoulomb =1.2
+rvdw                     = 1.2
+vdwtype =cutoff
+vdw_modifier=None
+coulomb_modifier=None
+
+
+energygrps = SOL
