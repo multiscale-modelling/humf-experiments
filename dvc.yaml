@@ -26,6 +26,33 @@ stages:
     metrics:
     - nodes/CreateGromacsDataset/node-meta.json:
         cache: false
+  TrainModel:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    params:
+    - TrainModel
+    outs:
+    - nodes/TrainModel/logs
+    - nodes/TrainModel/models
+    metrics:
+    - nodes/TrainModel/node-meta.json:
+        cache: false
+  EvaluateModels:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      EvaluateModels
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    - nodes/TrainModel/logs
+    - nodes/TrainModel/models
+    - nodes/TrainModel/node-meta.json
+    outs:
+    - nodes/EvaluateModels/results
+    metrics:
+    - nodes/EvaluateModels/node-meta.json:
+        cache: false
   ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
@@ -52,47 +79,6 @@ stages:
     - nodes/CreateOrcaDataset/data
     metrics:
     - nodes/CreateOrcaDataset/node-meta.json:
-        cache: false
-  TrainModel:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
-    deps:
-    - nodes/CreateGromacsDataset/data
-    - nodes/CreateGromacsDataset/node-meta.json
-    params:
-    - TrainModel
-    outs:
-    - nodes/TrainModel/logs
-    - nodes/TrainModel/models
-    metrics:
-    - nodes/TrainModel/node-meta.json:
-        cache: false
-  evaluate_models:
-    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      evaluate_models
-    deps:
-    - nodes/create_dataset/data
-    - nodes/create_dataset/node-meta.json
-    - nodes/train_model/logs
-    - nodes/train_model/models
-    - nodes/train_model/node-meta.json
-    outs:
-    - nodes/evaluate_models/results
-    metrics:
-    - nodes/evaluate_models/node-meta.json:
-        cache: false
-  EvaluateModels:
-    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      EvaluateModels
-    deps:
-    - nodes/CreateGromacsDataset/data
-    - nodes/CreateGromacsDataset/node-meta.json
-    - nodes/TrainModel/logs
-    - nodes/TrainModel/models
-    - nodes/TrainModel/node-meta.json
-    outs:
-    - nodes/EvaluateModels/results
-    metrics:
-    - nodes/EvaluateModels/node-meta.json:
         cache: false
   TrainModel_1:
     cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel_1
