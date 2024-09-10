@@ -35,7 +35,7 @@ class TrainModel(zn.Node):
         dataloader = DataLoader(dataset, shuffle=True, num_workers=7)
 
         batch = next(iter(dataloader))
-        print("DEBUG: ", batch.batch.device)
+        print("DEBUG: ", batch.pos.device)
 
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=5, monitor="train/loss"
