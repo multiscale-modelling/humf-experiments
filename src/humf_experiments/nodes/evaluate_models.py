@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 import plotly.express as px
+import torch
 import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
@@ -22,7 +23,8 @@ class EvaluateModels(zn.Node):
     results_dir: str = zop("results/")
 
     def run(self):
-        dataset = ASEDataset(self.data_root_dir)
+        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
         ljc_water = create_ljc_water()
 
         for model_path in Path(self.model_dir).iterdir():
