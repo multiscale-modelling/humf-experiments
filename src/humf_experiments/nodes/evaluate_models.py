@@ -46,9 +46,9 @@ class EvaluateModels(zn.Node):
             for data in dataset:
                 predictions = model(data)
                 predicted_energies.append(predictions[0].item())
-                predicted_forces.append(predictions[1].detach().numpy())
+                predicted_forces.append(predictions[1].detach().cpu().numpy())
                 target_energies.append(data.energy.item())
-                target_forces.append(data.forces.detach().numpy())
+                target_forces.append(data.forces.detach().cpu().numpy())
 
             fig = px.scatter(
                 x=target_energies,
