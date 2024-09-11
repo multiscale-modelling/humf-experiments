@@ -10,5 +10,5 @@ git rev-parse HEAD
 
 module load gromacs
 module load orca
-srun dvc repro -f CreateGromacsDataset
-srun dvc repro -f CreateOrcaDataset
+srun dvc repro CreateGromacsDataset
+srun dvc repro CreateOrcaDataset

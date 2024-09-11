@@ -11,7 +11,7 @@ echo "Current commit hash:"
 git rev-parse HEAD
 
 nvidia-smi
-srun dvc repro -fs TrainModel
-srun dvc repro -fs TrainModel_1
-srun dvc repro -fs EvaluateModels
-srun dvc repro -fs EvaluateModels_1
+srun dvc repro -s TrainModel
+srun dvc repro -s TrainModel_1
+srun dvc repro -s EvaluateModels
+srun dvc repro -s EvaluateModels_1
