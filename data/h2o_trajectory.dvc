@@ -1,0 +1,6 @@
+outs:
+- md5: 5d2e9a1c120106778f1e85836ea44244.dir
+  size: 15928343
+  nfiles: 8
+  hash: md5
+  path: h2o_trajectory
