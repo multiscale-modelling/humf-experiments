@@ -9,4 +9,6 @@ NH2OTrajectory:
     concatenate: 1
     num_molecules: 3
 TrainModel:
-    max_epochs: 10
+    max_epochs: 1000
+TrainModel_1:
+    max_epochs: 1000

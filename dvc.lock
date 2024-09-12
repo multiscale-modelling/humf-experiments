@@ -21,11 +21,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 9413bc8ddd89d6678614f1f77cfba637
-      size: 6215
+      md5: 8a256988acbcd259cd55f3906cfe30fd
+      size: 6202
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 9e56571979d171304504f06dfa63fc98
+      md5: 46eac72347069dfade08d275b20f4633
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -41,11 +41,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 9413bc8ddd89d6678614f1f77cfba637
-      size: 6215
+      md5: 8a256988acbcd259cd55f3906cfe30fd
+      size: 6202
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 9e56571979d171304504f06dfa63fc98
+      md5: 46eac72347069dfade08d275b20f4633
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -54,12 +54,12 @@ stages:
     outs:
     - path: nodes/CreateGromacsDataset/data
       hash: md5
-      md5: f805ff3a1e0ae35c41ce276059fa66c8.dir
-      size: 287853
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
       nfiles: 1
     - path: nodes/CreateGromacsDataset/node-meta.json
       hash: md5
-      md5: ab0619b18d0e3a68da34ae83fcf4ebdf
+      md5: bf6d1069316a094df8a64cae71ca09a3
       size: 64
   ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
@@ -72,11 +72,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 9413bc8ddd89d6678614f1f77cfba637
-      size: 6215
+      md5: 8a256988acbcd259cd55f3906cfe30fd
+      size: 6202
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 9e56571979d171304504f06dfa63fc98
+      md5: 46eac72347069dfade08d275b20f4633
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -94,12 +94,12 @@ stages:
     outs:
     - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: f02aff4fdf629e48aae0a106cf32bd51.dir
-      size: 102774217
+      md5: a69b92345813bc5d6104c43b110f53c7.dir
+      size: 102774806
       nfiles: 736
     - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: 39cd4872979cca729a9bdf17f19b4e5e
+      md5: 5afcf9fd08b1c53e305ccbd2d9df0e0a
       size: 64
   CreateOrcaDataset:
     cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
@@ -107,12 +107,12 @@ stages:
     deps:
     - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: f02aff4fdf629e48aae0a106cf32bd51.dir
-      size: 102774217
+      md5: a69b92345813bc5d6104c43b110f53c7.dir
+      size: 102774806
       nfiles: 736
     - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: 39cd4872979cca729a9bdf17f19b4e5e
+      md5: 5afcf9fd08b1c53e305ccbd2d9df0e0a
       size: 64
     outs:
     - path: nodes/CreateOrcaDataset/data
@@ -122,5 +122,141 @@ stages:
       nfiles: 1
     - path: nodes/CreateOrcaDataset/node-meta.json
       hash: md5
-      md5: 13d9344f000198565f3511aa82eebbbc
+      md5: 6f352f35209bdf93dc10fdaf0c3eb476
       size: 64
+  TrainModel:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: bf6d1069316a094df8a64cae71ca09a3
+      size: 64
+    params:
+      params.yaml:
+        TrainModel:
+          max_epochs: 1000
+    outs:
+    - path: nodes/TrainModel/logs
+      hash: md5
+      md5: 4241d7458168cdc4813b5b213c2400df.dir
+      size: 512379
+      nfiles: 2
+    - path: nodes/TrainModel/models
+      hash: md5
+      md5: 0e9463ccbf0c2e4e7fb048ca311a8a6d.dir
+      size: 36075
+      nfiles: 5
+    - path: nodes/TrainModel/node-meta.json
+      hash: md5
+      md5: f90703c4ed0a502aebc1e1d36ebb145a
+      size: 64
+  TrainModel_1:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel_1
+    deps:
+    - path: nodes/CreateOrcaDataset/data
+      hash: md5
+      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
+      size: 40197
+      nfiles: 1
+    - path: nodes/CreateOrcaDataset/node-meta.json
+      hash: md5
+      md5: 6f352f35209bdf93dc10fdaf0c3eb476
+      size: 64
+    params:
+      params.yaml:
+        TrainModel_1:
+          max_epochs: 1000
+    outs:
+    - path: nodes/TrainModel_1/logs
+      hash: md5
+      md5: d70d8f94a96a88705f4a436b5b8b7ba9.dir
+      size: 63235
+      nfiles: 2
+    - path: nodes/TrainModel_1/models
+      hash: md5
+      md5: 5985c1fd6b07a4c07da505e99644df13.dir
+      size: 36075
+      nfiles: 5
+    - path: nodes/TrainModel_1/node-meta.json
+      hash: md5
+      md5: 730c57b6fc853aec244636e5e85e39cb
+      size: 64
+  EvaluateModels:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      EvaluateModels
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: bf6d1069316a094df8a64cae71ca09a3
+      size: 64
+    - path: nodes/TrainModel/logs
+      hash: md5
+      md5: 4241d7458168cdc4813b5b213c2400df.dir
+      size: 512379
+      nfiles: 2
+    - path: nodes/TrainModel/models
+      hash: md5
+      md5: 0e9463ccbf0c2e4e7fb048ca311a8a6d.dir
+      size: 36075
+      nfiles: 5
+    - path: nodes/TrainModel/node-meta.json
+      hash: md5
+      md5: f90703c4ed0a502aebc1e1d36ebb145a
+      size: 64
+    outs:
+    - path: nodes/EvaluateModels/node-meta.json
+      hash: md5
+      md5: 01fc7bf82b820d63d7d68a5b29320009
+      size: 64
+    - path: nodes/EvaluateModels/results
+      hash: md5
+      md5: bc759582039f59226a6e358fb7aff50e.dir
+      size: 45885301
+      nfiles: 15
+  EvaluateModels_1:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      EvaluateModels_1
+    deps:
+    - path: nodes/CreateOrcaDataset/data
+      hash: md5
+      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
+      size: 40197
+      nfiles: 1
+    - path: nodes/CreateOrcaDataset/node-meta.json
+      hash: md5
+      md5: 6f352f35209bdf93dc10fdaf0c3eb476
+      size: 64
+    - path: nodes/TrainModel_1/logs
+      hash: md5
+      md5: d70d8f94a96a88705f4a436b5b8b7ba9.dir
+      size: 63235
+      nfiles: 2
+    - path: nodes/TrainModel_1/models
+      hash: md5
+      md5: 5985c1fd6b07a4c07da505e99644df13.dir
+      size: 36075
+      nfiles: 5
+    - path: nodes/TrainModel_1/node-meta.json
+      hash: md5
+      md5: 730c57b6fc853aec244636e5e85e39cb
+      size: 64
+    outs:
+    - path: nodes/EvaluateModels_1/node-meta.json
+      hash: md5
+      md5: 78ea2c9444d14b621b067e73189e1f8d
+      size: 64
+    - path: nodes/EvaluateModels_1/results
+      hash: md5
+      md5: a458e1f607b4350570b767cd42b01778.dir
+      size: 45293797
+      nfiles: 15

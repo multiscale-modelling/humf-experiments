@@ -32,7 +32,7 @@ class TrainModel(zn.Node):
         )
 
         dataset = ASEDataset(self.data_root_dir, force_reload=True)
-        dataloader = DataLoader(dataset, shuffle=True, num_workers=7)
+        dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=7)
 
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=5, monitor="train/loss"

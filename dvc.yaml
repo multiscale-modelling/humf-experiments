@@ -26,6 +26,33 @@ stages:
     metrics:
     - nodes/CreateGromacsDataset/node-meta.json:
         cache: false
+  TrainModel:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    params:
+    - TrainModel
+    outs:
+    - nodes/TrainModel/logs
+    - nodes/TrainModel/models
+    metrics:
+    - nodes/TrainModel/node-meta.json:
+        cache: false
+  EvaluateModels:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      EvaluateModels
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    - nodes/TrainModel/logs
+    - nodes/TrainModel/models
+    - nodes/TrainModel/node-meta.json
+    outs:
+    - nodes/EvaluateModels/results
+    metrics:
+    - nodes/EvaluateModels/node-meta.json:
+        cache: false
   ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
       humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
@@ -53,16 +80,30 @@ stages:
     metrics:
     - nodes/CreateOrcaDataset/node-meta.json:
         cache: false
-  TrainModel:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
+  TrainModel_1:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel_1
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
     params:
-    - TrainModel
+    - TrainModel_1
     outs:
-    - nodes/TrainModel/logs
-    - nodes/TrainModel/models
+    - nodes/TrainModel_1/logs
+    - nodes/TrainModel_1/models
     metrics:
-    - nodes/TrainModel/node-meta.json:
+    - nodes/TrainModel_1/node-meta.json:
+        cache: false
+  EvaluateModels_1:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      EvaluateModels_1
+    deps:
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
+    - nodes/TrainModel_1/logs
+    - nodes/TrainModel_1/models
+    - nodes/TrainModel_1/node-meta.json
+    outs:
+    - nodes/EvaluateModels_1/results
+    metrics:
+    - nodes/EvaluateModels_1/node-meta.json:
         cache: false
