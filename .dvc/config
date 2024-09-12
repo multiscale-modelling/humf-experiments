@@ -1,4 +1,0 @@
-[core]
-    remote = myremote
-['remote "myremote"']
-    url = ssh://a100/data/mq5940/dvc/humf_experiments
