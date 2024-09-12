@@ -1,5 +1,7 @@
 # pyright: reportCallIssue=false
 
+from itertools import product
+
 import zntrack
 
 from humf_experiments.nodes.convert_trajectory_to_orca_inputs import (
@@ -13,7 +15,7 @@ from humf_experiments.nodes.train_model import TrainModel
 
 
 def main():
-    project = zntrack.Project(initialize=False)
+    project = zntrack.Project(initialize=False, remove_existing_graph=True)
 
     with project:
         get_3_h2o_trajectory = NH2OTrajectory(
@@ -21,19 +23,13 @@ def main():
             concatenate=1,
             h2o_trajectory_dir="data/h2o_trajectory/",
         )
+
         create_gromacs_dataset = CreateGromacsDataset(
             n_h2o_trajectory=get_3_h2o_trajectory.n_h2o_trajectory,
             n_h2o_potential_energy=get_3_h2o_trajectory.n_h2o_potential_energy,
             n_h2o_trajectory_forces=get_3_h2o_trajectory.n_h2o_trajectory_forces,
         )
-        fit_model_to_gromacs_data = TrainModel(
-            data_root_dir=create_gromacs_dataset.data_dir,
-            max_epochs=1000,
-        )
-        EvaluateModels(
-            data_root_dir=create_gromacs_dataset.data_dir,
-            model_dir=fit_model_to_gromacs_data.model_dir,
-        )
+
         run_orca = ConvertTrajectoryToOrcaInputs(
             method_and_basisset="B3LYP def2-TZVP D3BJ",
             multiplicity="1",
@@ -46,14 +42,22 @@ def main():
         create_orca_dataset = CreateOrcaDataset(
             orca_frames_dir=run_orca.output_dir,
         )
-        train_model = TrainModel(
-            data_root_dir=create_orca_dataset.data_dir,
-            max_epochs=1000,
-        )
-        EvaluateModels(
-            data_root_dir=create_orca_dataset.data_dir,
-            model_dir=train_model.model_dir,
-        )
+
+        models = ["ljc_water", "polynomial_water"]
+        data_dirs = [create_gromacs_dataset.data_dir, create_orca_dataset.data_dir]
+        for model, data_dir in product(models, data_dirs):
+            train_model = TrainModel(
+                name=f"fit_{model}_to_{data_dir}",
+                model=model,
+                data_root_dir=data_dir,
+                max_epochs=1000,
+            )
+            EvaluateModels(
+                name=f"evaluate_{model}_on_{data_dir}",
+                model=model,
+                data_root_dir=data_dir,
+                model_dir=train_model.model_dir,
+            )
 
     project.build()
 

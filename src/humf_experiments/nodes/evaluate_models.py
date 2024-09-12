@@ -9,7 +9,7 @@ import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 
-from humf_experiments.models.lennard_jones_coulomb_water import create_ljc_water
+from humf_experiments.models.registry import models
 from humf_experiments.nodes.zntrack_utils import zop
 
 ENERGY_UNIT = "kcal/mol"
@@ -17,6 +17,8 @@ DISTANCE_UNIT = "Å"
 
 
 class EvaluateModels(zn.Node):
+    model: str = zn.params()
+
     data_root_dir: str = zn.deps()
     model_dir: str = zn.deps()
 
@@ -25,14 +27,14 @@ class EvaluateModels(zn.Node):
     def run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
-        ljc_water = create_ljc_water()
+        model = models[self.model]()
 
         for model_path in Path(self.model_dir).iterdir():
             model_results_dir = Path(self.results_dir) / model_path.stem
             model_results_dir.mkdir(parents=True, exist_ok=True)
 
             model = ForceField.load_from_checkpoint(
-                model_path, energy_model=ljc_water
+                model_path, energy_model=model
             ).eval()
 
             with open(model_results_dir / "params.txt", "w") as f:
