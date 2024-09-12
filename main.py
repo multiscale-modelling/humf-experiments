@@ -44,18 +44,18 @@ def main():
         )
 
         models = ["ljc_water", "polynomial_water"]
-        data_dirs = [create_gromacs_dataset.data_dir, create_orca_dataset.data_dir]
-        for model, data_dir in product(models, data_dirs):
+        data_nodes = [create_gromacs_dataset, create_orca_dataset]
+        for model, data_node in product(models, data_nodes):
             train_model = TrainModel(
-                name=f"fit_{model}_to_{data_dir}",
+                name=f"fit_{model}_to_{data_node.name}",
                 model=model,
-                data_root_dir=data_dir,
+                data_root_dir=data_node.data_dir,
                 max_epochs=1000,
             )
             EvaluateModels(
-                name=f"evaluate_{model}_on_{data_dir}",
+                name=f"evaluate_{model}_on_{data_node.name}",
                 model=model,
-                data_root_dir=data_dir,
+                data_root_dir=data_node.data_dir,
                 model_dir=train_model.model_dir,
             )
 
