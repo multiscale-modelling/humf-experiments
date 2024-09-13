@@ -124,3 +124,35 @@ stages:
       hash: md5
       md5: fef114a848b3a093b070edf3c9047811
       size: 64
+  fit_ljc_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_gromacs
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
+      size: 64
+    params:
+      params.yaml:
+        fit_ljc_water_to_gromacs:
+          max_epochs: 1000
+          model: ljc_water
+    outs:
+    - path: nodes/fit_ljc_water_to_gromacs/logs
+      hash: md5
+      md5: 4241d7458168cdc4813b5b213c2400df.dir
+      size: 512379
+      nfiles: 2
+    - path: nodes/fit_ljc_water_to_gromacs/models
+      hash: md5
+      md5: 461b8891fe09a881d057bb15f9ab5b15.dir
+      size: 36395
+      nfiles: 5
+    - path: nodes/fit_ljc_water_to_gromacs/node-meta.json
+      hash: md5
+      md5: 912401af36dde438a952ec785626363e
+      size: 64
