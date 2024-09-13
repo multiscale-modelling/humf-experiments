@@ -1,5 +1,4 @@
 import numpy as np
-import torch
 from humf.layers.energy.interacting_sites import InteractingSites
 from humf.layers.interaction_sites.atom_centered_static import AtomCenteredStatic
 from humf.layers.pair_energy.inverse_distance_polynomial import (
@@ -15,7 +14,7 @@ def create_polynomial_water():
     sites = AtomCenteredStatic(
         num_atoms_per_mol=3,
         num_params_per_atom=orders,
-        initial_params=torch.tensor(initial_params),
+        initial_params=initial_params,
     )
 
     pair_energy = InverseDistancePolynomial(orders)
