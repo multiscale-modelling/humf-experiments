@@ -15,7 +15,7 @@ from humf_experiments.nodes.train_model import TrainModel
 
 
 def main():
-    project = zntrack.Project(initialize=False, remove_existing_graph=True)
+    project = zntrack.Project(initialize=False)
 
     with project:
         get_3_h2o_trajectory = NH2OTrajectory(
