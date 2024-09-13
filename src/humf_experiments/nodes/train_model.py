@@ -6,7 +6,7 @@ import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 from lightning.pytorch.callbacks import ModelCheckpoint
-from lightning.pytorch.loggers import CSVLogger
+from lightning.pytorch.loggers import TensorBoardLogger
 from torch_geometric.loader import DataLoader
 
 from humf_experiments.models.factory import create_model
@@ -36,9 +36,10 @@ class TrainModel(zn.Node):
         dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=7)
 
         checkpoint_callback = ModelCheckpoint(
-            dirpath=self.model_dir, save_top_k=5, monitor="train/loss"
+            dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
-        logger = CSVLogger(self.log_dir, name=None)
+        # logger = CSVLogger(self.log_dir, name=None)
+        logger = TensorBoardLogger(self.log_dir)
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
             deterministic=True,

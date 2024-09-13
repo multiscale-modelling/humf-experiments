@@ -27,9 +27,10 @@ class EvaluateModels(zn.Node):
     def run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
+        results_dir = Path(self.results_dir)
 
         for model_path in Path(self.model_dir).iterdir():
-            model_results_dir = Path(self.results_dir) / model_path.stem
+            model_results_dir = results_dir / model_path.stem
             model_results_dir.mkdir(parents=True, exist_ok=True)
 
             model = ForceField.load_from_checkpoint(
@@ -60,17 +61,7 @@ class EvaluateModels(zn.Node):
                     "y": f"Predicted energy / {ENERGY_UNIT}",
                 },
             )
-            diagonal = {
-                "type": "line",
-                "line": {"color": "red", "dash": "dash"},
-                "xref": "paper",
-                "yref": "paper",
-                "x0": 0,
-                "y0": 0,
-                "x1": 1,
-                "y1": 1,
-            }
-            fig.add_shape(**diagonal)
+            fig.add_shape(**get_line_of_equality(target_energies, predicted_energies))
             fig.write_html(model_results_dir / "energy_prediction.html")
 
             predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
@@ -93,7 +84,11 @@ class EvaluateModels(zn.Node):
                     "direlection": "Direction",
                 },
             )
-            fig.add_shape(**diagonal)
+            fig.add_shape(
+                **get_line_of_equality(
+                    forces_df["force_target"], forces_df["force_predicted"]
+                )
+            )
             fig.write_html(model_results_dir / "force_prediction.html")
 
 
@@ -113,3 +108,18 @@ def convert_forces_to_long_dataframe(data):
                 )
     df = pd.DataFrame(records)
     return df
+
+
+def get_line_of_equality(x, y):
+    x_min, x_max = min(x), max(x)
+    y_min, y_max = min(y), max(y)
+    minimum = min(x_min, y_min)
+    maximum = max(x_max, y_max)
+    return {
+        "type": "line",
+        "line": {"color": "red", "dash": "dash"},
+        "x0": minimum,
+        "y0": minimum,
+        "x1": maximum,
+        "y1": maximum,
+    }
