@@ -17,8 +17,8 @@ nvidia-smi
 # inputs and parameters and will thus be skipped by DVC.
 srun dvc repro
 
-# You can force a single gpu stage to run using -sf, e.g.
-# srun dvc repro -sf TrainModel
+# You can force a single gpu stage to run using -fs, e.g.
+# srun dvc repro -fs TrainModel
 
 # Note that you can not force a gpu stage and its dependencies to run.
 # This would run cpu nodes without the necessary resources.

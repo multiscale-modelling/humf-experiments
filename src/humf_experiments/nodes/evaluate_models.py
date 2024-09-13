@@ -27,14 +27,13 @@ class EvaluateModels(zn.Node):
     def run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
-        model = create_model(self.model)
 
         for model_path in Path(self.model_dir).iterdir():
             model_results_dir = Path(self.results_dir) / model_path.stem
             model_results_dir.mkdir(parents=True, exist_ok=True)
 
             model = ForceField.load_from_checkpoint(
-                model_path, energy_model=model
+                model_path, energy_model=create_model(self.model)
             ).eval()
 
             with open(model_results_dir / "params.txt", "w") as f:
@@ -55,22 +54,23 @@ class EvaluateModels(zn.Node):
             fig = px.scatter(
                 x=target_energies,
                 y=predicted_energies,
+                title="Energy prediction",
                 labels={
                     "x": f"Target energy / {ENERGY_UNIT}",
                     "y": f"Predicted energy / {ENERGY_UNIT}",
                 },
-                title="Energy prediction",
             )
-            fig.add_shape(
-                type="line",
-                x0=0,
-                y0=0,
-                x1=1,
-                y1=1,
-                line=dict(color="red", dash="dash"),
-                xref="x",
-                yref="y",
-            )
+            diagonal = {
+                "type": "line",
+                "line": {"color": "red", "dash": "dash"},
+                "xref": "paper",
+                "yref": "paper",
+                "x0": 0,
+                "y0": 0,
+                "x1": 1,
+                "y1": 1,
+            }
+            fig.add_shape(**diagonal)
             fig.write_html(model_results_dir / "energy_prediction.html")
 
             predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
@@ -82,8 +82,18 @@ class EvaluateModels(zn.Node):
                 suffixes=("_predicted", "_target"),
             )
             fig = px.scatter(
-                forces_df, x="force_target", y="force_predicted", color="direction"
+                forces_df,
+                x="force_target",
+                y="force_predicted",
+                color="direction",
+                title="Force prediction",
+                labels={
+                    "force_target": f"Target force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                    "force_predicted": f"Predicted force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                    "direlection": "Direction",
+                },
             )
+            fig.add_shape(**diagonal)
             fig.write_html(model_results_dir / "force_prediction.html")
 
 

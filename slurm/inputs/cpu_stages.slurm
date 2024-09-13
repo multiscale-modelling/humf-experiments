@@ -17,8 +17,8 @@ module load orca
 srun dvc repro CreateGromacsDataset
 srun dvc repro CreateOrcaDataset
 
-# You can force a single cpu stage to run using -sf, e.g.
-# srun dvc repro -sf CreateGromacsDataset
+# You can force a single cpu stage to run using -fs, e.g.
+# srun dvc repro -fs CreateGromacsDataset
 
 # You can force a stage and all its dependencies to run using -f, e.g.
 # srun dvc repro -f CreateGromacsDataset

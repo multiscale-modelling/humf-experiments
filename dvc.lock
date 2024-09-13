@@ -156,3 +156,44 @@ stages:
       hash: md5
       md5: 912401af36dde438a952ec785626363e
       size: 64
+  evaluate_ljc_water_on_gromacs:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_ljc_water_on_gromacs
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
+      size: 64
+    - path: nodes/fit_ljc_water_to_gromacs/logs
+      hash: md5
+      md5: 4241d7458168cdc4813b5b213c2400df.dir
+      size: 512379
+      nfiles: 2
+    - path: nodes/fit_ljc_water_to_gromacs/models
+      hash: md5
+      md5: 461b8891fe09a881d057bb15f9ab5b15.dir
+      size: 36395
+      nfiles: 5
+    - path: nodes/fit_ljc_water_to_gromacs/node-meta.json
+      hash: md5
+      md5: 912401af36dde438a952ec785626363e
+      size: 64
+    params:
+      params.yaml:
+        evaluate_ljc_water_on_gromacs:
+          model: ljc_water
+    outs:
+    - path: nodes/evaluate_ljc_water_on_gromacs/node-meta.json
+      hash: md5
+      md5: 38e84c967f00d16a8bab954e60b891fa
+      size: 64
+    - path: nodes/evaluate_ljc_water_on_gromacs/results
+      hash: md5
+      md5: cf8fad2ded3d5714c7f115b9ff16f369.dir
+      size: 45887595
+      nfiles: 15
