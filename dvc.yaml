@@ -53,119 +53,119 @@ stages:
     metrics:
     - nodes/CreateOrcaDataset/node-meta.json:
         cache: false
-  fit_ljc_water_to_CreateGromacsDataset:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_CreateGromacsDataset
+  fit_ljc_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_gromacs
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
     params:
-    - fit_ljc_water_to_CreateGromacsDataset
+    - fit_ljc_water_to_gromacs
     outs:
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/logs
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/models
+    - nodes/fit_ljc_water_to_gromacs/logs
+    - nodes/fit_ljc_water_to_gromacs/models
     metrics:
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/node-meta.json:
+    - nodes/fit_ljc_water_to_gromacs/node-meta.json:
         cache: false
-  evaluate_ljc_water_on_CreateGromacsDataset:
+  evaluate_ljc_water_on_gromacs:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      evaluate_ljc_water_on_CreateGromacsDataset
+      evaluate_ljc_water_on_gromacs
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/logs
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/models
-    - nodes/fit_ljc_water_to_CreateGromacsDataset/node-meta.json
+    - nodes/fit_ljc_water_to_gromacs/logs
+    - nodes/fit_ljc_water_to_gromacs/models
+    - nodes/fit_ljc_water_to_gromacs/node-meta.json
     params:
-    - evaluate_ljc_water_on_CreateGromacsDataset
+    - evaluate_ljc_water_on_gromacs
     outs:
-    - nodes/evaluate_ljc_water_on_CreateGromacsDataset/results
+    - nodes/evaluate_ljc_water_on_gromacs/results
     metrics:
-    - nodes/evaluate_ljc_water_on_CreateGromacsDataset/node-meta.json:
+    - nodes/evaluate_ljc_water_on_gromacs/node-meta.json:
         cache: false
-  fit_ljc_water_to_CreateOrcaDataset:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_CreateOrcaDataset
+  fit_ljc_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_orca
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
     params:
-    - fit_ljc_water_to_CreateOrcaDataset
+    - fit_ljc_water_to_orca
     outs:
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/logs
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/models
+    - nodes/fit_ljc_water_to_orca/logs
+    - nodes/fit_ljc_water_to_orca/models
     metrics:
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/node-meta.json:
+    - nodes/fit_ljc_water_to_orca/node-meta.json:
         cache: false
-  evaluate_ljc_water_on_CreateOrcaDataset:
+  evaluate_ljc_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      evaluate_ljc_water_on_CreateOrcaDataset
+      evaluate_ljc_water_on_orca
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/logs
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/models
-    - nodes/fit_ljc_water_to_CreateOrcaDataset/node-meta.json
+    - nodes/fit_ljc_water_to_orca/logs
+    - nodes/fit_ljc_water_to_orca/models
+    - nodes/fit_ljc_water_to_orca/node-meta.json
     params:
-    - evaluate_ljc_water_on_CreateOrcaDataset
+    - evaluate_ljc_water_on_orca
     outs:
-    - nodes/evaluate_ljc_water_on_CreateOrcaDataset/results
+    - nodes/evaluate_ljc_water_on_orca/results
     metrics:
-    - nodes/evaluate_ljc_water_on_CreateOrcaDataset/node-meta.json:
+    - nodes/evaluate_ljc_water_on_orca/node-meta.json:
         cache: false
-  fit_polynomial_water_to_CreateGromacsDataset:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_CreateGromacsDataset
+  fit_polynomial_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_gromacs
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
     params:
-    - fit_polynomial_water_to_CreateGromacsDataset
+    - fit_polynomial_water_to_gromacs
     outs:
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/logs
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/models
+    - nodes/fit_polynomial_water_to_gromacs/logs
+    - nodes/fit_polynomial_water_to_gromacs/models
     metrics:
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/node-meta.json:
+    - nodes/fit_polynomial_water_to_gromacs/node-meta.json:
         cache: false
-  evaluate_polynomial_water_on_CreateGromacsDataset:
+  evaluate_polynomial_water_on_gromacs:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      evaluate_polynomial_water_on_CreateGromacsDataset
+      evaluate_polynomial_water_on_gromacs
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/logs
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/models
-    - nodes/fit_polynomial_water_to_CreateGromacsDataset/node-meta.json
+    - nodes/fit_polynomial_water_to_gromacs/logs
+    - nodes/fit_polynomial_water_to_gromacs/models
+    - nodes/fit_polynomial_water_to_gromacs/node-meta.json
     params:
-    - evaluate_polynomial_water_on_CreateGromacsDataset
+    - evaluate_polynomial_water_on_gromacs
     outs:
-    - nodes/evaluate_polynomial_water_on_CreateGromacsDataset/results
+    - nodes/evaluate_polynomial_water_on_gromacs/results
     metrics:
-    - nodes/evaluate_polynomial_water_on_CreateGromacsDataset/node-meta.json:
+    - nodes/evaluate_polynomial_water_on_gromacs/node-meta.json:
         cache: false
-  fit_polynomial_water_to_CreateOrcaDataset:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_CreateOrcaDataset
+  fit_polynomial_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_orca
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
     params:
-    - fit_polynomial_water_to_CreateOrcaDataset
+    - fit_polynomial_water_to_orca
     outs:
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/logs
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/models
+    - nodes/fit_polynomial_water_to_orca/logs
+    - nodes/fit_polynomial_water_to_orca/models
     metrics:
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/node-meta.json:
+    - nodes/fit_polynomial_water_to_orca/node-meta.json:
         cache: false
-  evaluate_polynomial_water_on_CreateOrcaDataset:
+  evaluate_polynomial_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      evaluate_polynomial_water_on_CreateOrcaDataset
+      evaluate_polynomial_water_on_orca
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/logs
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/models
-    - nodes/fit_polynomial_water_to_CreateOrcaDataset/node-meta.json
+    - nodes/fit_polynomial_water_to_orca/logs
+    - nodes/fit_polynomial_water_to_orca/models
+    - nodes/fit_polynomial_water_to_orca/node-meta.json
     params:
-    - evaluate_polynomial_water_on_CreateOrcaDataset
+    - evaluate_polynomial_water_on_orca
     outs:
-    - nodes/evaluate_polynomial_water_on_CreateOrcaDataset/results
+    - nodes/evaluate_polynomial_water_on_orca/results
     metrics:
-    - nodes/evaluate_polynomial_water_on_CreateOrcaDataset/node-meta.json:
+    - nodes/evaluate_polynomial_water_on_orca/node-meta.json:
         cache: false

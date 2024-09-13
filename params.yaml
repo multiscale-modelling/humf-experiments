@@ -8,23 +8,23 @@ ConvertTrajectoryToOrcaInputs:
 NH2OTrajectory:
     concatenate: 1
     num_molecules: 3
-evaluate_ljc_water_on_CreateGromacsDataset:
+evaluate_ljc_water_on_gromacs:
     model: ljc_water
-evaluate_ljc_water_on_CreateOrcaDataset:
+evaluate_ljc_water_on_orca:
     model: ljc_water
-evaluate_polynomial_water_on_CreateGromacsDataset:
+evaluate_polynomial_water_on_gromacs:
     model: polynomial_water
-evaluate_polynomial_water_on_CreateOrcaDataset:
+evaluate_polynomial_water_on_orca:
     model: polynomial_water
-fit_ljc_water_to_CreateGromacsDataset:
+fit_ljc_water_to_gromacs:
     max_epochs: 1000
     model: ljc_water
-fit_ljc_water_to_CreateOrcaDataset:
+fit_ljc_water_to_orca:
     max_epochs: 1000
     model: ljc_water
-fit_polynomial_water_to_CreateGromacsDataset:
+fit_polynomial_water_to_gromacs:
     max_epochs: 1000
     model: polynomial_water
-fit_polynomial_water_to_CreateOrcaDataset:
+fit_polynomial_water_to_orca:
     max_epochs: 1000
     model: polynomial_water

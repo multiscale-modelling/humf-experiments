@@ -133,7 +133,7 @@
             "value": "nodes/CreateOrcaDataset"
         }
     },
-    "fit_ljc_water_to_CreateGromacsDataset": {
+    "fit_ljc_water_to_gromacs": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -161,10 +161,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/fit_ljc_water_to_CreateGromacsDataset"
+            "value": "nodes/fit_ljc_water_to_gromacs"
         }
     },
-    "evaluate_ljc_water_on_CreateGromacsDataset": {
+    "evaluate_ljc_water_on_gromacs": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -190,7 +190,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.train_model",
                         "cls": "TrainModel",
-                        "name": "fit_ljc_water_to_CreateGromacsDataset",
+                        "name": "fit_ljc_water_to_gromacs",
                         "remote": null,
                         "rev": null
                     }
@@ -205,10 +205,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/evaluate_ljc_water_on_CreateGromacsDataset"
+            "value": "nodes/evaluate_ljc_water_on_gromacs"
         }
     },
-    "fit_ljc_water_to_CreateOrcaDataset": {
+    "fit_ljc_water_to_orca": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -236,10 +236,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/fit_ljc_water_to_CreateOrcaDataset"
+            "value": "nodes/fit_ljc_water_to_orca"
         }
     },
-    "evaluate_ljc_water_on_CreateOrcaDataset": {
+    "evaluate_ljc_water_on_orca": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -265,7 +265,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.train_model",
                         "cls": "TrainModel",
-                        "name": "fit_ljc_water_to_CreateOrcaDataset",
+                        "name": "fit_ljc_water_to_orca",
                         "remote": null,
                         "rev": null
                     }
@@ -280,10 +280,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/evaluate_ljc_water_on_CreateOrcaDataset"
+            "value": "nodes/evaluate_ljc_water_on_orca"
         }
     },
-    "fit_polynomial_water_to_CreateGromacsDataset": {
+    "fit_polynomial_water_to_gromacs": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -311,10 +311,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/fit_polynomial_water_to_CreateGromacsDataset"
+            "value": "nodes/fit_polynomial_water_to_gromacs"
         }
     },
-    "evaluate_polynomial_water_on_CreateGromacsDataset": {
+    "evaluate_polynomial_water_on_gromacs": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -340,7 +340,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.train_model",
                         "cls": "TrainModel",
-                        "name": "fit_polynomial_water_to_CreateGromacsDataset",
+                        "name": "fit_polynomial_water_to_gromacs",
                         "remote": null,
                         "rev": null
                     }
@@ -355,10 +355,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/evaluate_polynomial_water_on_CreateGromacsDataset"
+            "value": "nodes/evaluate_polynomial_water_on_gromacs"
         }
     },
-    "fit_polynomial_water_to_CreateOrcaDataset": {
+    "fit_polynomial_water_to_orca": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -386,10 +386,10 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/fit_polynomial_water_to_CreateOrcaDataset"
+            "value": "nodes/fit_polynomial_water_to_orca"
         }
     },
-    "evaluate_polynomial_water_on_CreateOrcaDataset": {
+    "evaluate_polynomial_water_on_orca": {
         "data_root_dir": {
             "_type": "znflow.Connection",
             "value": {
@@ -415,7 +415,7 @@
                     "value": {
                         "module": "humf_experiments.nodes.train_model",
                         "cls": "TrainModel",
-                        "name": "fit_polynomial_water_to_CreateOrcaDataset",
+                        "name": "fit_polynomial_water_to_orca",
                         "remote": null,
                         "rev": null
                     }
@@ -430,7 +430,7 @@
         },
         "nwd": {
             "_type": "pathlib.Path",
-            "value": "nodes/evaluate_polynomial_water_on_CreateOrcaDataset"
+            "value": "nodes/evaluate_polynomial_water_on_orca"
         }
     }
 }
