@@ -9,7 +9,7 @@ import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 
-from humf_experiments.models.registry import models
+from humf_experiments.models.factory import create_model
 from humf_experiments.nodes.zntrack_utils import zop
 
 ENERGY_UNIT = "kcal/mol"
@@ -27,7 +27,7 @@ class EvaluateModels(zn.Node):
     def run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
-        model = models[self.model]()
+        model = create_model(self.model)
 
         for model_path in Path(self.model_dir).iterdir():
             model_results_dir = Path(self.results_dir) / model_path.stem
@@ -60,6 +60,16 @@ class EvaluateModels(zn.Node):
                     "y": f"Predicted energy / {ENERGY_UNIT}",
                 },
                 title="Energy prediction",
+            )
+            fig.add_shape(
+                type="line",
+                x0=0,
+                y0=0,
+                x1=1,
+                y1=1,
+                line=dict(color="red", dash="dash"),
+                xref="x",
+                yref="y",
             )
             fig.write_html(model_results_dir / "energy_prediction.html")
 

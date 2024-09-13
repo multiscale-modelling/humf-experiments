@@ -9,7 +9,7 @@ from lightning.pytorch.callbacks import ModelCheckpoint
 from lightning.pytorch.loggers import CSVLogger
 from torch_geometric.loader import DataLoader
 
-from humf_experiments.models.registry import models
+from humf_experiments.models.factory import create_model
 from humf_experiments.nodes.zntrack_utils import zop
 
 
@@ -27,7 +27,7 @@ class TrainModel(zn.Node):
         L.seed_everything(42, workers=True)
 
         model = ForceField(
-            models[self.model](),
+            create_model(self.model),
             learning_rate=1e-3,
             trade_off=0.1,
         )

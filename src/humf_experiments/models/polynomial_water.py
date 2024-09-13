@@ -6,10 +6,7 @@ from humf.layers.pair_energy.inverse_distance_polynomial import (
     InverseDistancePolynomial,
 )
 
-from humf_experiments.models.registry import register_factory
 
-
-@register_factory
 def create_polynomial_water():
     num_atoms_per_mol = 3
     orders = 12

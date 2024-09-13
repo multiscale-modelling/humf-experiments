@@ -3,10 +3,7 @@ import torch
 from humf.layers.energy.lennard_jones_coulomb import LennardJonesCoulomb
 from humf.layers.interaction_sites.atom_centered_static import AtomCenteredStatic
 
-from humf_experiments.models.registry import register_factory
 
-
-@register_factory
 def create_ljc_water():
     num_atoms_per_mol = 3
 
