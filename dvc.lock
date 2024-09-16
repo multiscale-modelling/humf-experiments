@@ -221,21 +221,21 @@ stages:
           max_epochs: 1000
           model: ljc_water
           seed: 42
-          trade_off: 1
+          trade_off: 0.5
     outs:
     - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: c418e2d1cb37d6e9f329f7443f69f177.dir
-      size: 204966
+      md5: efb85565914446bed74aec02227870c6.dir
+      size: 204968
       nfiles: 2
     - path: nodes/fit_ljc_water_to_orca/models
       hash: md5
-      md5: f54133cc394aeea25c42d3099cbbda34.dir
+      md5: 9fede738d6ae7a543b59899d1c925ea3.dir
       size: 22203
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: 4be930f380c0b88c7bc14fb2ea119321
+      md5: 956ba36e4c9a5468fe35401db011b161
       size: 64
   evaluate_ljc_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
@@ -252,17 +252,17 @@ stages:
       size: 64
     - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: c418e2d1cb37d6e9f329f7443f69f177.dir
-      size: 204966
+      md5: efb85565914446bed74aec02227870c6.dir
+      size: 204968
       nfiles: 2
     - path: nodes/fit_ljc_water_to_orca/models
       hash: md5
-      md5: f54133cc394aeea25c42d3099cbbda34.dir
+      md5: 9fede738d6ae7a543b59899d1c925ea3.dir
       size: 22203
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: 4be930f380c0b88c7bc14fb2ea119321
+      md5: 956ba36e4c9a5468fe35401db011b161
       size: 64
     params:
       params.yaml:
@@ -271,12 +271,12 @@ stages:
     outs:
     - path: nodes/evaluate_ljc_water_on_orca/node-meta.json
       hash: md5
-      md5: 40d87af6cb2e77317e8758ee51356c8f
+      md5: af57ce0f15fc600812235f9146476763
       size: 64
     - path: nodes/evaluate_ljc_water_on_orca/results
       hash: md5
-      md5: d808f149db86174f821b2ba4cf966a8f.dir
-      size: 27177879
+      md5: 80be6c5465b456bd97a096347f26e6f0.dir
+      size: 27179562
       nfiles: 9
   fit_polynomial_water_to_gromacs:
     cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_gromacs
