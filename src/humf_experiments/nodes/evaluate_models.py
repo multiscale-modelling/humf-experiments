@@ -9,7 +9,7 @@ import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 
-from humf_experiments.models.lennard_jones_coulomb_water import create_ljc_water
+from humf_experiments.models.factory import create_model
 from humf_experiments.nodes.zntrack_utils import zop
 
 ENERGY_UNIT = "kcal/mol"
@@ -17,6 +17,8 @@ DISTANCE_UNIT = "Å"
 
 
 class EvaluateModels(zn.Node):
+    model: str = zn.params()
+
     data_root_dir: str = zn.deps()
     model_dir: str = zn.deps()
 
@@ -25,14 +27,14 @@ class EvaluateModels(zn.Node):
     def run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
-        ljc_water = create_ljc_water()
+        results_dir = Path(self.results_dir)
 
         for model_path in Path(self.model_dir).iterdir():
-            model_results_dir = Path(self.results_dir) / model_path.stem
+            model_results_dir = results_dir / model_path.stem
             model_results_dir.mkdir(parents=True, exist_ok=True)
 
             model = ForceField.load_from_checkpoint(
-                model_path, energy_model=ljc_water
+                model_path, energy_model=create_model(self.model)
             ).eval()
 
             with open(model_results_dir / "params.txt", "w") as f:
@@ -53,12 +55,13 @@ class EvaluateModels(zn.Node):
             fig = px.scatter(
                 x=target_energies,
                 y=predicted_energies,
+                title="Energy prediction",
                 labels={
                     "x": f"Target energy / {ENERGY_UNIT}",
                     "y": f"Predicted energy / {ENERGY_UNIT}",
                 },
-                title="Energy prediction",
             )
+            fig.add_shape(**get_line_of_equality(target_energies, predicted_energies))
             fig.write_html(model_results_dir / "energy_prediction.html")
 
             predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
@@ -70,7 +73,21 @@ class EvaluateModels(zn.Node):
                 suffixes=("_predicted", "_target"),
             )
             fig = px.scatter(
-                forces_df, x="force_target", y="force_predicted", color="direction"
+                forces_df,
+                x="force_target",
+                y="force_predicted",
+                color="direction",
+                title="Force prediction",
+                labels={
+                    "force_target": f"Target force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                    "force_predicted": f"Predicted force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                    "direlection": "Direction",
+                },
+            )
+            fig.add_shape(
+                **get_line_of_equality(
+                    forces_df["force_target"], forces_df["force_predicted"]
+                )
             )
             fig.write_html(model_results_dir / "force_prediction.html")
 
@@ -91,3 +108,18 @@ def convert_forces_to_long_dataframe(data):
                 )
     df = pd.DataFrame(records)
     return df
+
+
+def get_line_of_equality(x, y):
+    x_min, x_max = min(x), max(x)
+    y_min, y_max = min(y), max(y)
+    minimum = min(x_min, y_min)
+    maximum = max(x_max, y_max)
+    return {
+        "type": "line",
+        "line": {"color": "red", "dash": "dash"},
+        "x0": minimum,
+        "y0": minimum,
+        "x1": maximum,
+        "y1": maximum,
+    }

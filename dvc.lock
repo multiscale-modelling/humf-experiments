@@ -21,11 +21,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 8a256988acbcd259cd55f3906cfe30fd
-      size: 6202
+      md5: 2536dbd5f5f963d07a476239e4f723eb
+      size: 6188
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 46eac72347069dfade08d275b20f4633
+      md5: fc73e323b160342f333648c20e5f7a23
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -41,11 +41,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 8a256988acbcd259cd55f3906cfe30fd
-      size: 6202
+      md5: 2536dbd5f5f963d07a476239e4f723eb
+      size: 6188
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 46eac72347069dfade08d275b20f4633
+      md5: fc73e323b160342f333648c20e5f7a23
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -59,7 +59,7 @@ stages:
       nfiles: 1
     - path: nodes/CreateGromacsDataset/node-meta.json
       hash: md5
-      md5: bf6d1069316a094df8a64cae71ca09a3
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
       size: 64
   ConvertTrajectoryToOrcaInputs:
     cmd: zntrack run 
@@ -72,11 +72,11 @@ stages:
       size: 181994
     - path: nodes/NH2OTrajectory/energy.xvg
       hash: md5
-      md5: 8a256988acbcd259cd55f3906cfe30fd
-      size: 6202
+      md5: 2536dbd5f5f963d07a476239e4f723eb
+      size: 6188
     - path: nodes/NH2OTrajectory/node-meta.json
       hash: md5
-      md5: 46eac72347069dfade08d275b20f4633
+      md5: fc73e323b160342f333648c20e5f7a23
       size: 64
     - path: nodes/NH2OTrajectory/reduced.gro
       hash: md5
@@ -94,12 +94,12 @@ stages:
     outs:
     - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: a69b92345813bc5d6104c43b110f53c7.dir
-      size: 102774806
+      md5: 91a82a3906d394884e8f43c7301c1dad.dir
+      size: 102775550
       nfiles: 736
     - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: 5afcf9fd08b1c53e305ccbd2d9df0e0a
+      md5: 545067fb606addcac694fde2564a5a5b
       size: 64
   CreateOrcaDataset:
     cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
@@ -107,25 +107,25 @@ stages:
     deps:
     - path: nodes/ConvertTrajectoryToOrcaInputs/frames
       hash: md5
-      md5: a69b92345813bc5d6104c43b110f53c7.dir
-      size: 102774806
+      md5: 91a82a3906d394884e8f43c7301c1dad.dir
+      size: 102775550
       nfiles: 736
     - path: nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
       hash: md5
-      md5: 5afcf9fd08b1c53e305ccbd2d9df0e0a
+      md5: 545067fb606addcac694fde2564a5a5b
       size: 64
     outs:
     - path: nodes/CreateOrcaDataset/data
       hash: md5
-      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
-      size: 40197
+      md5: 8b7eff26ffcaedde1ce644d6068ab347.dir
+      size: 40194
       nfiles: 1
     - path: nodes/CreateOrcaDataset/node-meta.json
       hash: md5
-      md5: 6f352f35209bdf93dc10fdaf0c3eb476
+      md5: fef114a848b3a093b070edf3c9047811
       size: 64
-  TrainModel:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel
+  fit_ljc_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_gromacs
     deps:
     - path: nodes/CreateGromacsDataset/data
       hash: md5
@@ -134,61 +134,35 @@ stages:
       nfiles: 1
     - path: nodes/CreateGromacsDataset/node-meta.json
       hash: md5
-      md5: bf6d1069316a094df8a64cae71ca09a3
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
       size: 64
     params:
       params.yaml:
-        TrainModel:
-          max_epochs: 1000
+        fit_ljc_water_to_gromacs:
+          batch_size: 32
+          learning_rate: 0.001
+          max_epochs: 100
+          model: ljc_water
+          seed: 42
+          trade_off: 0
     outs:
-    - path: nodes/TrainModel/logs
+    - path: nodes/fit_ljc_water_to_gromacs/logs
       hash: md5
-      md5: 4241d7458168cdc4813b5b213c2400df.dir
-      size: 512379
+      md5: fcd431b0a3a70acfce5c9d27bee7cf47.dir
+      size: 143468
       nfiles: 2
-    - path: nodes/TrainModel/models
+    - path: nodes/fit_ljc_water_to_gromacs/models
       hash: md5
-      md5: 0e9463ccbf0c2e4e7fb048ca311a8a6d.dir
-      size: 36075
-      nfiles: 5
-    - path: nodes/TrainModel/node-meta.json
+      md5: b67997f5218cdb2037b73e45e697362a.dir
+      size: 22203
+      nfiles: 3
+    - path: nodes/fit_ljc_water_to_gromacs/node-meta.json
       hash: md5
-      md5: f90703c4ed0a502aebc1e1d36ebb145a
+      md5: 0e2947529f67a761c16d4420adbbf6cd
       size: 64
-  TrainModel_1:
-    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name TrainModel_1
-    deps:
-    - path: nodes/CreateOrcaDataset/data
-      hash: md5
-      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
-      size: 40197
-      nfiles: 1
-    - path: nodes/CreateOrcaDataset/node-meta.json
-      hash: md5
-      md5: 6f352f35209bdf93dc10fdaf0c3eb476
-      size: 64
-    params:
-      params.yaml:
-        TrainModel_1:
-          max_epochs: 1000
-    outs:
-    - path: nodes/TrainModel_1/logs
-      hash: md5
-      md5: d70d8f94a96a88705f4a436b5b8b7ba9.dir
-      size: 63235
-      nfiles: 2
-    - path: nodes/TrainModel_1/models
-      hash: md5
-      md5: 5985c1fd6b07a4c07da505e99644df13.dir
-      size: 36075
-      nfiles: 5
-    - path: nodes/TrainModel_1/node-meta.json
-      hash: md5
-      md5: 730c57b6fc853aec244636e5e85e39cb
-      size: 64
-  EvaluateModels:
+  evaluate_ljc_water_on_gromacs:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      EvaluateModels
+      evaluate_ljc_water_on_gromacs
     deps:
     - path: nodes/CreateGromacsDataset/data
       hash: md5
@@ -197,66 +171,264 @@ stages:
       nfiles: 1
     - path: nodes/CreateGromacsDataset/node-meta.json
       hash: md5
-      md5: bf6d1069316a094df8a64cae71ca09a3
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
       size: 64
-    - path: nodes/TrainModel/logs
+    - path: nodes/fit_ljc_water_to_gromacs/logs
       hash: md5
-      md5: 4241d7458168cdc4813b5b213c2400df.dir
-      size: 512379
+      md5: fcd431b0a3a70acfce5c9d27bee7cf47.dir
+      size: 143468
       nfiles: 2
-    - path: nodes/TrainModel/models
+    - path: nodes/fit_ljc_water_to_gromacs/models
       hash: md5
-      md5: 0e9463ccbf0c2e4e7fb048ca311a8a6d.dir
-      size: 36075
-      nfiles: 5
-    - path: nodes/TrainModel/node-meta.json
+      md5: b67997f5218cdb2037b73e45e697362a.dir
+      size: 22203
+      nfiles: 3
+    - path: nodes/fit_ljc_water_to_gromacs/node-meta.json
       hash: md5
-      md5: f90703c4ed0a502aebc1e1d36ebb145a
+      md5: 0e2947529f67a761c16d4420adbbf6cd
       size: 64
+    params:
+      params.yaml:
+        evaluate_ljc_water_on_gromacs:
+          model: ljc_water
     outs:
-    - path: nodes/EvaluateModels/node-meta.json
+    - path: nodes/evaluate_ljc_water_on_gromacs/node-meta.json
       hash: md5
-      md5: 01fc7bf82b820d63d7d68a5b29320009
+      md5: 1f0abacde282e73869b3c4bdbb1ceb6d
       size: 64
-    - path: nodes/EvaluateModels/results
+    - path: nodes/evaluate_ljc_water_on_gromacs/results
       hash: md5
-      md5: bc759582039f59226a6e358fb7aff50e.dir
-      size: 45885301
-      nfiles: 15
-  EvaluateModels_1:
-    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
-      EvaluateModels_1
+      md5: d5cc7471f67d7db6655bfa8cd3702fae.dir
+      size: 27533028
+      nfiles: 9
+  fit_ljc_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_orca
     deps:
     - path: nodes/CreateOrcaDataset/data
       hash: md5
-      md5: 433374a7cf4cff9dd2899cd24ea00a1d.dir
-      size: 40197
+      md5: 8b7eff26ffcaedde1ce644d6068ab347.dir
+      size: 40194
       nfiles: 1
     - path: nodes/CreateOrcaDataset/node-meta.json
       hash: md5
-      md5: 6f352f35209bdf93dc10fdaf0c3eb476
+      md5: fef114a848b3a093b070edf3c9047811
       size: 64
-    - path: nodes/TrainModel_1/logs
-      hash: md5
-      md5: d70d8f94a96a88705f4a436b5b8b7ba9.dir
-      size: 63235
-      nfiles: 2
-    - path: nodes/TrainModel_1/models
-      hash: md5
-      md5: 5985c1fd6b07a4c07da505e99644df13.dir
-      size: 36075
-      nfiles: 5
-    - path: nodes/TrainModel_1/node-meta.json
-      hash: md5
-      md5: 730c57b6fc853aec244636e5e85e39cb
-      size: 64
+    params:
+      params.yaml:
+        fit_ljc_water_to_orca:
+          batch_size: 32
+          learning_rate: 0.1
+          max_epochs: 1000
+          model: ljc_water
+          seed: 42
+          trade_off: 0.5
     outs:
-    - path: nodes/EvaluateModels_1/node-meta.json
+    - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: 78ea2c9444d14b621b067e73189e1f8d
+      md5: efb85565914446bed74aec02227870c6.dir
+      size: 204968
+      nfiles: 2
+    - path: nodes/fit_ljc_water_to_orca/models
+      hash: md5
+      md5: 9fede738d6ae7a543b59899d1c925ea3.dir
+      size: 22203
+      nfiles: 3
+    - path: nodes/fit_ljc_water_to_orca/node-meta.json
+      hash: md5
+      md5: 956ba36e4c9a5468fe35401db011b161
       size: 64
-    - path: nodes/EvaluateModels_1/results
+  evaluate_ljc_water_on_orca:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_ljc_water_on_orca
+    deps:
+    - path: nodes/CreateOrcaDataset/data
       hash: md5
-      md5: a458e1f607b4350570b767cd42b01778.dir
-      size: 45293797
-      nfiles: 15
+      md5: 8b7eff26ffcaedde1ce644d6068ab347.dir
+      size: 40194
+      nfiles: 1
+    - path: nodes/CreateOrcaDataset/node-meta.json
+      hash: md5
+      md5: fef114a848b3a093b070edf3c9047811
+      size: 64
+    - path: nodes/fit_ljc_water_to_orca/logs
+      hash: md5
+      md5: efb85565914446bed74aec02227870c6.dir
+      size: 204968
+      nfiles: 2
+    - path: nodes/fit_ljc_water_to_orca/models
+      hash: md5
+      md5: 9fede738d6ae7a543b59899d1c925ea3.dir
+      size: 22203
+      nfiles: 3
+    - path: nodes/fit_ljc_water_to_orca/node-meta.json
+      hash: md5
+      md5: 956ba36e4c9a5468fe35401db011b161
+      size: 64
+    params:
+      params.yaml:
+        evaluate_ljc_water_on_orca:
+          model: ljc_water
+    outs:
+    - path: nodes/evaluate_ljc_water_on_orca/node-meta.json
+      hash: md5
+      md5: af57ce0f15fc600812235f9146476763
+      size: 64
+    - path: nodes/evaluate_ljc_water_on_orca/results
+      hash: md5
+      md5: 80be6c5465b456bd97a096347f26e6f0.dir
+      size: 27179562
+      nfiles: 9
+  fit_polynomial_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_gromacs
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
+      size: 64
+    params:
+      params.yaml:
+        fit_polynomial_water_to_gromacs:
+          batch_size: 32
+          learning_rate: 0.001
+          max_epochs: 100
+          model: polynomial_water
+          seed: 42
+          trade_off: 0
+    outs:
+    - path: nodes/fit_polynomial_water_to_gromacs/logs
+      hash: md5
+      md5: 802eedcc504f5a56c866165c37e63790.dir
+      size: 143468
+      nfiles: 2
+    - path: nodes/fit_polynomial_water_to_gromacs/models
+      hash: md5
+      md5: 516b60769b2e18d6e0967adc50d49583.dir
+      size: 21078
+      nfiles: 3
+    - path: nodes/fit_polynomial_water_to_gromacs/node-meta.json
+      hash: md5
+      md5: 02f704ec8eb4b705939469f16c67442b
+      size: 64
+  evaluate_polynomial_water_on_gromacs:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_polynomial_water_on_gromacs
+    deps:
+    - path: nodes/CreateGromacsDataset/data
+      hash: md5
+      md5: d37636d921478c659f71e0fd2a1d5da8.dir
+      size: 250725
+      nfiles: 1
+    - path: nodes/CreateGromacsDataset/node-meta.json
+      hash: md5
+      md5: 9de03066b0f07bd63ccc82d3a44988b6
+      size: 64
+    - path: nodes/fit_polynomial_water_to_gromacs/logs
+      hash: md5
+      md5: 802eedcc504f5a56c866165c37e63790.dir
+      size: 143468
+      nfiles: 2
+    - path: nodes/fit_polynomial_water_to_gromacs/models
+      hash: md5
+      md5: 516b60769b2e18d6e0967adc50d49583.dir
+      size: 21078
+      nfiles: 3
+    - path: nodes/fit_polynomial_water_to_gromacs/node-meta.json
+      hash: md5
+      md5: 02f704ec8eb4b705939469f16c67442b
+      size: 64
+    params:
+      params.yaml:
+        evaluate_polynomial_water_on_gromacs:
+          model: polynomial_water
+    outs:
+    - path: nodes/evaluate_polynomial_water_on_gromacs/node-meta.json
+      hash: md5
+      md5: 310114fabf20342c995ec42b8b230193
+      size: 64
+    - path: nodes/evaluate_polynomial_water_on_gromacs/results
+      hash: md5
+      md5: 0844890a56e69eda8efcf79491d3b515.dir
+      size: 27426336
+      nfiles: 9
+  fit_polynomial_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_orca
+    deps:
+    - path: nodes/CreateOrcaDataset/data
+      hash: md5
+      md5: 8b7eff26ffcaedde1ce644d6068ab347.dir
+      size: 40194
+      nfiles: 1
+    - path: nodes/CreateOrcaDataset/node-meta.json
+      hash: md5
+      md5: fef114a848b3a093b070edf3c9047811
+      size: 64
+    params:
+      params.yaml:
+        fit_polynomial_water_to_orca:
+          batch_size: 32
+          learning_rate: 0.001
+          max_epochs: 100
+          model: polynomial_water
+          seed: 42
+          trade_off: 0
+    outs:
+    - path: nodes/fit_polynomial_water_to_orca/logs
+      hash: md5
+      md5: b86289b9782212f7f4357e4d9fee1390.dir
+      size: 20580
+      nfiles: 2
+    - path: nodes/fit_polynomial_water_to_orca/models
+      hash: md5
+      md5: eac25e462a4b1e1209c96958a5766cf0.dir
+      size: 21078
+      nfiles: 3
+    - path: nodes/fit_polynomial_water_to_orca/node-meta.json
+      hash: md5
+      md5: eba93048d57bb8a91343010b36140cb9
+      size: 64
+  evaluate_polynomial_water_on_orca:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_polynomial_water_on_orca
+    deps:
+    - path: nodes/CreateOrcaDataset/data
+      hash: md5
+      md5: 8b7eff26ffcaedde1ce644d6068ab347.dir
+      size: 40194
+      nfiles: 1
+    - path: nodes/CreateOrcaDataset/node-meta.json
+      hash: md5
+      md5: fef114a848b3a093b070edf3c9047811
+      size: 64
+    - path: nodes/fit_polynomial_water_to_orca/logs
+      hash: md5
+      md5: b86289b9782212f7f4357e4d9fee1390.dir
+      size: 20580
+      nfiles: 2
+    - path: nodes/fit_polynomial_water_to_orca/models
+      hash: md5
+      md5: eac25e462a4b1e1209c96958a5766cf0.dir
+      size: 21078
+      nfiles: 3
+    - path: nodes/fit_polynomial_water_to_orca/node-meta.json
+      hash: md5
+      md5: eba93048d57bb8a91343010b36140cb9
+      size: 64
+    params:
+      params.yaml:
+        evaluate_polynomial_water_on_orca:
+          model: polynomial_water
+    outs:
+    - path: nodes/evaluate_polynomial_water_on_orca/node-meta.json
+      hash: md5
+      md5: ea4792b439efbc2c26984f78a6e46788
+      size: 64
+    - path: nodes/evaluate_polynomial_water_on_orca/results
+      hash: md5
+      md5: cd5e2bbbfa45834fc140377773a96f1d.dir
+      size: 27166173
+      nfiles: 9

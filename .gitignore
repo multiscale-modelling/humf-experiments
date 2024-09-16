@@ -2,5 +2,5 @@ __pycache__/
 processed/
 
 /notebooks/outputs/
-/slurm/outputs/
+/slurm/outputs/*.out
 /tests/nodes/

@@ -6,6 +6,7 @@ from humf_experiments.nodes.evaluate_models import EvaluateModels
 class TestEvaluateModels:
     def test_run(self):
         node = EvaluateModels(
+            model="ljc_water",
             data_root_dir="inputs/evaluate_models/data/",
             model_dir="inputs/evaluate_models/models/",
         )
