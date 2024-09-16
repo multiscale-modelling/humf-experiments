@@ -1,5 +1,6 @@
 # pyright: reportAssignmentType=false
 
+
 import lightning as L
 import torch
 import zntrack as zn
@@ -14,8 +15,12 @@ from humf_experiments.nodes.zntrack_utils import zop
 
 
 class TrainModel(zn.Node):
-    max_epochs: int = zn.params()
+    batch_size: int = zn.params(32)
+    learning_rate: float = zn.params(1e-3)
+    max_epochs: int = zn.params(100)
     model: str = zn.params()
+    seed: int = zn.params(42)
+    trade_off: float = zn.params(0)
 
     data_root_dir: str = zn.deps()
 
@@ -24,16 +29,18 @@ class TrainModel(zn.Node):
 
     def run(self):
         torch.set_float32_matmul_precision("high")
-        L.seed_everything(42, workers=True)
+        L.seed_everything(self.seed, workers=True)
 
         model = ForceField(
             create_model(self.model),
-            learning_rate=1e-3,
-            trade_off=0.1,
+            learning_rate=self.learning_rate,
+            trade_off=self.trade_off,
         )
 
         dataset = ASEDataset(self.data_root_dir, force_reload=True)
-        dataloader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=7)
+        dataloader = DataLoader(
+            dataset, batch_size=self.batch_size, shuffle=True, num_workers=7
+        )
 
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"

@@ -50,7 +50,6 @@ def main():
                 name=f"fit_{model}_to_{dataset[0]}",
                 model=model,
                 data_root_dir=dataset[1].data_dir,
-                max_epochs=2000,
             )
             EvaluateModels(
                 name=f"evaluate_{model}_on_{dataset[0]}",
