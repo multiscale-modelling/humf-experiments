@@ -17,14 +17,14 @@ evaluate_polynomial_water_on_gromacs:
 evaluate_polynomial_water_on_orca:
     model: polynomial_water
 fit_ljc_water_to_gromacs:
-    max_epochs: 1000
+    max_epochs: 2000
     model: ljc_water
 fit_ljc_water_to_orca:
-    max_epochs: 1000
+    max_epochs: 2000
     model: ljc_water
 fit_polynomial_water_to_gromacs:
-    max_epochs: 1000
+    max_epochs: 2000
     model: polynomial_water
 fit_polynomial_water_to_orca:
-    max_epochs: 1000
+    max_epochs: 2000
     model: polynomial_water
