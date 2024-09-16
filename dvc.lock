@@ -217,25 +217,25 @@ stages:
       params.yaml:
         fit_ljc_water_to_orca:
           batch_size: 32
-          learning_rate: 0.001
-          max_epochs: 100
+          learning_rate: 0.1
+          max_epochs: 1000
           model: ljc_water
           seed: 42
-          trade_off: 0
+          trade_off: 1
     outs:
     - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: 67df38b63f424fa2c1e9abe1cba000ab.dir
-      size: 20580
+      md5: c418e2d1cb37d6e9f329f7443f69f177.dir
+      size: 204966
       nfiles: 2
     - path: nodes/fit_ljc_water_to_orca/models
       hash: md5
-      md5: dc43d1d000f8d187b5b043c07acc9e01.dir
+      md5: f54133cc394aeea25c42d3099cbbda34.dir
       size: 22203
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: f7a9f398a4d5a6fc59b434c7ed808f11
+      md5: 4be930f380c0b88c7bc14fb2ea119321
       size: 64
   evaluate_ljc_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
@@ -252,17 +252,17 @@ stages:
       size: 64
     - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: 67df38b63f424fa2c1e9abe1cba000ab.dir
-      size: 20580
+      md5: c418e2d1cb37d6e9f329f7443f69f177.dir
+      size: 204966
       nfiles: 2
     - path: nodes/fit_ljc_water_to_orca/models
       hash: md5
-      md5: dc43d1d000f8d187b5b043c07acc9e01.dir
+      md5: f54133cc394aeea25c42d3099cbbda34.dir
       size: 22203
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: f7a9f398a4d5a6fc59b434c7ed808f11
+      md5: 4be930f380c0b88c7bc14fb2ea119321
       size: 64
     params:
       params.yaml:
@@ -271,12 +271,12 @@ stages:
     outs:
     - path: nodes/evaluate_ljc_water_on_orca/node-meta.json
       hash: md5
-      md5: 0302d9059cc70703c6fa1525cdd16722
+      md5: 40d87af6cb2e77317e8758ee51356c8f
       size: 64
     - path: nodes/evaluate_ljc_water_on_orca/results
       hash: md5
-      md5: 4e86333f8b90402fd462106c244f7f45.dir
-      size: 27177409
+      md5: d808f149db86174f821b2ba4cf966a8f.dir
+      size: 27177879
       nfiles: 9
   fit_polynomial_water_to_gromacs:
     cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_gromacs
