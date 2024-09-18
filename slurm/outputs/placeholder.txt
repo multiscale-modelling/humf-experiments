@@ -1,1 +1,0 @@
-This placeholder ensures that the directory for Slurm outputs gets created when the repo is cloned.
