@@ -27,11 +27,13 @@ pre-commit install
 
 ## Running the workflow
 
+Run `sbatch slurm/inputs/submit_workflow.slurm` to run the workflow. Alternatively, details on how to run the workflow manually are given below.
+
 To set up the DVC pipeline, run `python main.py`. Rerun this command whenever you make changes to `main.py`. Note that ZnTrack only ever adds stages to or overrides stages in `dvc.yaml`. Thus, when removing stages from `main.py`, you may also want to remove them from `dvc.yaml`.
 
-To run the workflow locally, use `dvc repro`. Note that the workflow consists of two parts: A CPU-demanding part that generates datasets and a GPU-demanding part that trains models. To run these parts individually on a Slurm cluster, use `sbatch slurm/inputs/cpu_stages.slurm` and `sbatch slurm/inputs/gpu_stages.slurm` respectively. To run the full workflow, use `bash slurm/inputs/submit_workflow.sh`. The latter submits the two Slurm scripts in the correct order. The slurm scripts run the necessary `dvc repro` commands. For more fine-grained control over what exactly gets executed, see also the comments in the files in `slurm/inputs/`, as well as the [documentation](https://dvc.org/doc/command-reference/repro) of `dvc repro`.
+Once the DVC pipeline is up-to-date, it can be run using `dvc repro` or `dvc exp run`. Consult the DVC docs on these commands for further details. Before running a stage, make sure to load the required software dependencies, i.e. activate the poetry environment for this project and use `module load gromacs` and `module load orca`. Ignore warnings that say PyTorch can't find NVIDIA drivers, the workflow nodes request computational resources including GPUs as necessary.
 
-The `dvc repro` command will only run stages with changed dependencies, unless the `--force` option is given. Whenever running a stage creates or modifies output files in `nodes/`, DVC automatically commits the new files to the cache and updates the corresponding placeholder files tracked by git. This is then visible in the output of `git status`. See also the output of `dvc data status` and `dvc status`. To persist the changes, `git commit` and `git push` the placeholder files and `dvc push` the data files to the remote storage. To revert the changes, use `git checkout .` and `dvc checkout`.
+The `dvc repro` and `dvc exp run` commands will only run stages with changed dependencies, unless the `--force` option is given. Whenever running a stage creates or modifies output files in `nodes/`, DVC automatically commits the new files to the cache and updates the corresponding placeholder files tracked by git. This is then visible in the output of `git status`. See also the output of `dvc data status` and `dvc status`. To commit the changes, `git commit` and `git push` the placeholder files and `dvc push` the data files to the remote storage. To revert the changes, use `git checkout .` and `dvc checkout`.
 
 ## Testing
 
