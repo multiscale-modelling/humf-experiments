@@ -10,7 +10,7 @@ def zop(path) -> str:
 
 class SubmititNode(zntrack.Node):
     def run(self):
-        executor = submitit.AutoExecutor(folder="submitit")
+        executor = submitit.AutoExecutor(folder=self.nwd / "submitit_logs/")
         executor.update_parameters(**self.get_executor_parameters())
         executor.submit(self.do_run).result()
 
