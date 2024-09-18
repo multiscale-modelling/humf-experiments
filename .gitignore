@@ -1,5 +1,6 @@
 __pycache__/
 processed/
+submitit_logs/
 
 /notebooks/outputs/
 /tests/nodes/
