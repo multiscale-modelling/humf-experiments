@@ -1,6 +1,6 @@
 __pycache__/
 processed/
+submitit/
 
 /notebooks/outputs/
-/slurm/outputs/*.out
 /tests/nodes/
