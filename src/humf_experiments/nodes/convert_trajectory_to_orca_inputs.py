@@ -6,7 +6,7 @@ from pathlib import Path
 
 import zntrack as zn
 
-from humf_experiments.nodes.zntrack_utils import zop
+from humf_experiments.nodes.zntrack_utils import SubmititNode, zop
 
 
 def run_which(command):
@@ -23,7 +23,7 @@ def run_orca_on_file(orca_bin, file, outfile):
         subprocess.check_call([orca_bin, file], stdout=of, stderr=subprocess.STDOUT)
 
 
-class ConvertTrajectoryToOrcaInputs(zn.Node):
+class ConvertTrajectoryToOrcaInputs(SubmititNode):
     method_and_basisset: str = zn.params()
     multiplicity: str = zn.params()
     charge: str = zn.params()
@@ -35,7 +35,7 @@ class ConvertTrajectoryToOrcaInputs(zn.Node):
 
     output_dir: str = zop("frames/")
 
-    def run(self):
+    def do_run(self):
         print("am I running orca", self.run_orca)
         print("operating on the gro File")
         print(self.gro_file)

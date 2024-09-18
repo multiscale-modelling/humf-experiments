@@ -11,15 +11,15 @@ from humf_experiments.data.orca import (
     HARTREE_IN_KCAL_PER_MOL,
     orca_extract_all_frames_from_folder,
 )
-from humf_experiments.nodes.zntrack_utils import zop
+from humf_experiments.nodes.zntrack_utils import SubmititNode, zop
 
 
-class CreateOrcaDataset(zn.Node):
+class CreateOrcaDataset(SubmititNode):
     orca_frames_dir: str = zn.deps()
 
     data_dir: str = zop("data/")
 
-    def run(self):
+    def do_run(self):
         frames = orca_extract_all_frames_from_folder(self.orca_frames_dir)
         atoms_list = []
         for frame in frames:
