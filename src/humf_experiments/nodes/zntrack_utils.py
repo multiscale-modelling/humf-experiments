@@ -10,12 +10,15 @@ def zop(path) -> str:
 
 class SubmititNode(zntrack.Node):
     def run(self):
-        executor = submitit.AutoExecutor(folder="log_test")
+        executor = submitit.AutoExecutor(folder="submitit")
         executor.update_parameters(**self.get_executor_parameters())
         executor.submit(self.do_run).result()
 
     def get_executor_parameters(self):
-        return {}
+        return {
+            "cpus_per_task": 8,
+            "mem_gb": 32,
+        }
 
     def do_run(self):
         pass

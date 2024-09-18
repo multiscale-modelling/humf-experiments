@@ -10,13 +10,13 @@ from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 
 from humf_experiments.models.factory import create_model
-from humf_experiments.nodes.zntrack_utils import zop
+from humf_experiments.nodes.zntrack_utils import SubmititNode, zop
 
 ENERGY_UNIT = "kcal/mol"
 DISTANCE_UNIT = "Å"
 
 
-class EvaluateModels(zn.Node):
+class EvaluateModels(SubmititNode):
     model: str = zn.params()
 
     data_root_dir: str = zn.deps()
@@ -24,7 +24,15 @@ class EvaluateModels(zn.Node):
 
     results_dir: str = zop("results/")
 
-    def run(self):
+    def get_executor_parameters(self):
+        return {
+            "cpus_per_task": 8,
+            "gpus_per_node": 1,
+            "mem_gb": 32,
+            "slurm_partition": "a100",
+        }
+
+    def do_run(self):
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
         results_dir = Path(self.results_dir)

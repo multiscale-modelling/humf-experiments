@@ -8,10 +8,10 @@ from tempfile import TemporaryDirectory
 
 import zntrack as zn
 
-from humf_experiments.nodes.zntrack_utils import zop
+from humf_experiments.nodes.zntrack_utils import SubmititNode, zop
 
 
-class NH2OTrajectory(zn.Node):
+class NH2OTrajectory(SubmititNode):
     num_molecules: int = zn.params()
     concatenate: int = zn.params()
 
@@ -21,7 +21,7 @@ class NH2OTrajectory(zn.Node):
     n_h2o_potential_energy: str = zop("energy.xvg")
     n_h2o_trajectory_forces: str = zop("dumped_forces.txt")
 
-    def run(self):
+    def do_run(self):
         os.makedirs(self.nwd, exist_ok=True)
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
         trajectory_dir = Path(self.h2o_trajectory_dir).resolve()

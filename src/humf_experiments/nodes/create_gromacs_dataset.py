@@ -15,17 +15,17 @@ from humf_experiments.data.gromacs.simplified_gro_reader import (
     NANOMETER_IN_ANGSTROM,
     extract_all_coordinates_from_gro_file,
 )
-from humf_experiments.nodes.zntrack_utils import zop
+from humf_experiments.nodes.zntrack_utils import SubmititNode, zop
 
 
-class CreateGromacsDataset(zn.Node):
+class CreateGromacsDataset(SubmititNode):
     n_h2o_trajectory: str = zn.deps()
     n_h2o_potential_energy: str = zn.deps()
     n_h2o_trajectory_forces: str = zn.deps()
 
     data_dir: str = zop("data/")
 
-    def run(self):
+    def do_run(self):
         times, energies = read_xvg_2_column(self.n_h2o_potential_energy)
         forces_df = return_forces_from_gmx_dump_of_trj(
             self.n_h2o_trajectory_forces, splitstring=None
