@@ -1,7 +1,7 @@
 # pyright: reportAssignmentType=false
 
-
 import lightning as L
+import submitit
 import torch
 import zntrack as zn
 from humf.data.ase_dataset import ASEDataset
@@ -28,6 +28,16 @@ class TrainModel(zn.Node):
     model_dir: str = zop("models/")
 
     def run(self):
+        executor = submitit.AutoExecutor(folder="log_test")
+        executor.update_parameters(
+            cpus_per_task=8,
+            gpus_per_node=1,
+            mem_gb=32,
+            slurm_partition="a100",
+        )
+        executor.submit(self._run).result()
+
+    def _run(self):
         torch.set_float32_matmul_precision("high")
         L.seed_everything(self.seed, workers=True)
 
