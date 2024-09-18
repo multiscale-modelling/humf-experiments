@@ -25,6 +25,9 @@ class NH2OTrajectory(zn.Node):
         os.makedirs(self.nwd, exist_ok=True)
         bash_script_path = Path(__file__).parent / "order_and_trj.sh"
         trajectory_dir = Path(self.h2o_trajectory_dir).resolve()
+        print(trajectory_dir)
+        print(trajectory_dir.is_dir())
+        print(type(trajectory_dir))
         assert trajectory_dir.is_dir()
 
         with TemporaryDirectory() as tempdir:
