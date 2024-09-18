@@ -17,6 +17,7 @@ zntrack = "^0.7.3"
 ase = "^3.23.0"
 plotly = "^5.24.0"
 tensorboard = "^2.17.1"
+submitit = "^1.5.1"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"

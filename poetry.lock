@@ -683,6 +683,17 @@ prompt-toolkit = ">=3.0.36"
 testing = ["pytest (>=7.2.1)", "pytest-cov (>=4.0.0)", "tox (>=4.4.3)"]
 
 [[package]]
+name = "cloudpickle"
+version = "3.0.0"
+description = "Pickler class to extend the standard pickle.Pickler functionality"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "cloudpickle-3.0.0-py3-none-any.whl", hash = "sha256:246ee7d0c295602a036e86369c77fecda4ab17b506496730f2f576d9016fd9c7"},
+    {file = "cloudpickle-3.0.0.tar.gz", hash = "sha256:996d9a482c6fb4f33c1a35335cf8afd065d2a56e973270364840712d9131a882"},
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -4060,6 +4071,24 @@ pure-eval = "*"
 tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 
 [[package]]
+name = "submitit"
+version = "1.5.1"
+description = "\"Python 3.8+ toolbox for submitting jobs to Slurm"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "submitit-1.5.1-py3-none-any.whl", hash = "sha256:c62f3d50bf5070f89b94d79d83d1dca260eefd22a5b3a97eb1f3cd6a5a7b771c"},
+    {file = "submitit-1.5.1.tar.gz", hash = "sha256:a08016daefb188420fb32412f627e2029a1a2d7484a55afe6b1892ff31928626"},
+]
+
+[package.dependencies]
+cloudpickle = ">=1.2.1"
+typing_extensions = ">=3.7.4.2"
+
+[package.extras]
+dev = ["black (==23.3.0)", "coverage[toml] (>=5.1)", "flit (>=3.5.1)", "isort (==5.11.5)", "mypy (>=1.4.1)", "pre-commit (>=1.15.2)", "pylint (>=3.0.0)", "pytest (>=7.4.2)", "pytest-asyncio (>=0.15.0)", "pytest-cov (>=4.1.0)", "types-pkg_resources (>=0.1.2)"]
+
+[[package]]
 name = "sympy"
 version = "1.13.2"
 description = "Computer algebra system (CAS) in Python"
@@ -4769,4 +4798,4 @@ znjson = ">=0.2,<0.3"
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.11"
-content-hash = "9ae2f793c83f20633b451696fda6ae6cd2c15b588a9c9d2b964fc6f3928866a9"
+content-hash = "f4fbd7c4a074a20240183834626849e1ba08d4118d45d93b4c86e3e66e30973c"
