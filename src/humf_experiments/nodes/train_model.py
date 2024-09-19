@@ -23,7 +23,7 @@ class TrainModel(SubmititNode):
 
     data_root_dir: str = zn.deps()
 
-    log_dir: str = zop("logs/")
+    live_dir: str = zop("dvclive/")
     model_dir: str = zop("models/")
 
     def get_executor_parameters(self):
@@ -53,7 +53,7 @@ class TrainModel(SubmititNode):
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
         logger = DVCLiveLogger(
-            dir=self.log_dir, dvcyaml=self.nwd / "dvc.yaml", monitor_system=True
+            dir=self.live_dir, dvcyaml=self.nwd / "dvc.yaml", monitor_system=True
         )
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
