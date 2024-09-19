@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.express as px
 import torch
 import zntrack as zn
+from dvclive import Live
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 
@@ -37,67 +38,78 @@ class EvaluateModels(SubmititNode):
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
         results_dir = Path(self.results_dir)
 
-        for model_path in Path(self.model_dir).iterdir():
-            model_results_dir = results_dir / model_path.stem
-            model_results_dir.mkdir(parents=True, exist_ok=True)
+        with Live() as live:
+            for model_path in Path(self.model_dir).iterdir():
+                model_results_dir = results_dir / model_path.stem
+                model_results_dir.mkdir(parents=True, exist_ok=True)
 
-            model = ForceField.load_from_checkpoint(
-                model_path, energy_model=create_model(self.model)
-            ).eval()
+                model = ForceField.load_from_checkpoint(
+                    model_path, energy_model=create_model(self.model)
+                ).eval()
 
-            with open(model_results_dir / "params.txt", "w") as f:
-                for name, params in model.named_parameters():
-                    f.write(f"{name}\n{params}\n")
+                with open(model_results_dir / "params.txt", "w") as f:
+                    for name, params in model.named_parameters():
+                        f.write(f"{name}\n{params}\n")
 
-            predicted_energies = []
-            predicted_forces = []
-            target_energies = []
-            target_forces = []
-            for data in dataset:
-                predictions = model(data)
-                predicted_energies.append(predictions[0].item())
-                predicted_forces.append(predictions[1].detach().cpu().numpy())
-                target_energies.append(data.energy.item())
-                target_forces.append(data.forces.detach().cpu().numpy())
+                predicted_energies = []
+                predicted_forces = []
+                target_energies = []
+                target_forces = []
+                for data in dataset:
+                    predictions = model(data)
+                    predicted_energies.append(predictions[0].item())
+                    predicted_forces.append(predictions[1].detach().cpu().numpy())
+                    target_energies.append(data.energy.item())
+                    target_forces.append(data.forces.detach().cpu().numpy())
 
-            fig = px.scatter(
-                x=target_energies,
-                y=predicted_energies,
-                title="Energy prediction",
-                labels={
-                    "x": f"Target energy / {ENERGY_UNIT}",
-                    "y": f"Predicted energy / {ENERGY_UNIT}",
-                },
-            )
-            fig.add_shape(**get_line_of_equality(target_energies, predicted_energies))
-            fig.write_html(model_results_dir / "energy_prediction.html")
-
-            predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
-            target_forces_df = convert_forces_to_long_dataframe(target_forces)
-            forces_df = pd.merge(
-                predicted_forces_df,
-                target_forces_df,
-                on=["timestep", "atom", "direction"],
-                suffixes=("_predicted", "_target"),
-            )
-            fig = px.scatter(
-                forces_df,
-                x="force_target",
-                y="force_predicted",
-                color="direction",
-                title="Force prediction",
-                labels={
-                    "force_target": f"Target force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
-                    "force_predicted": f"Predicted force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
-                    "direlection": "Direction",
-                },
-            )
-            fig.add_shape(
-                **get_line_of_equality(
-                    forces_df["force_target"], forces_df["force_predicted"]
+                fig = px.scatter(
+                    x=target_energies,
+                    y=predicted_energies,
+                    title="Energy prediction",
+                    labels={
+                        "x": f"Target energy / {ENERGY_UNIT}",
+                        "y": f"Predicted energy / {ENERGY_UNIT}",
+                    },
                 )
-            )
-            fig.write_html(model_results_dir / "force_prediction.html")
+                fig.add_shape(
+                    **get_line_of_equality(target_energies, predicted_energies)
+                )
+                fig.write_html(model_results_dir / "energy_prediction.html")
+                fig.write_image(model_results_dir / "energy_prediction.png")
+                live.log_image(
+                    "energy prediction", model_results_dir / "energy_prediction.png"
+                )
+
+                predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
+                target_forces_df = convert_forces_to_long_dataframe(target_forces)
+                forces_df = pd.merge(
+                    predicted_forces_df,
+                    target_forces_df,
+                    on=["timestep", "atom", "direction"],
+                    suffixes=("_predicted", "_target"),
+                )
+                fig = px.scatter(
+                    forces_df,
+                    x="force_target",
+                    y="force_predicted",
+                    color="direction",
+                    title="Force prediction",
+                    labels={
+                        "force_target": f"Target force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                        "force_predicted": f"Predicted force / {ENERGY_UNIT}/{DISTANCE_UNIT}",
+                        "direlection": "Direction",
+                    },
+                )
+                fig.add_shape(
+                    **get_line_of_equality(
+                        forces_df["force_target"], forces_df["force_predicted"]
+                    )
+                )
+                fig.write_html(model_results_dir / "force_prediction.html")
+                fig.write_image(model_results_dir / "force_prediction.png")
+                live.log_image(
+                    "force prediction", model_results_dir / "force_prediction.png"
+                )
 
 
 def convert_forces_to_long_dataframe(data):

@@ -235,7 +235,7 @@ stages:
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: aafef97781ba12443ed58adf22da6fb7
+      md5: dcbaafe7faceb0c85ce1dee885620308
       size: 64
   evaluate_ljc_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
