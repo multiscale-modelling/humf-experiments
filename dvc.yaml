@@ -61,7 +61,7 @@ stages:
     params:
     - fit_ljc_water_to_gromacs
     outs:
-    - nodes/fit_ljc_water_to_gromacs/logs
+    - nodes/fit_ljc_water_to_gromacs/dvclive
     - nodes/fit_ljc_water_to_gromacs/models
     metrics:
     - nodes/fit_ljc_water_to_gromacs/node-meta.json:
@@ -72,12 +72,13 @@ stages:
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
-    - nodes/fit_ljc_water_to_gromacs/logs
+    - nodes/fit_ljc_water_to_gromacs/dvclive
     - nodes/fit_ljc_water_to_gromacs/models
     - nodes/fit_ljc_water_to_gromacs/node-meta.json
     params:
     - evaluate_ljc_water_on_gromacs
     outs:
+    - nodes/evaluate_ljc_water_on_gromacs/dvclive
     - nodes/evaluate_ljc_water_on_gromacs/results
     metrics:
     - nodes/evaluate_ljc_water_on_gromacs/node-meta.json:
@@ -90,7 +91,7 @@ stages:
     params:
     - fit_ljc_water_to_orca
     outs:
-    - nodes/fit_ljc_water_to_orca/logs
+    - nodes/fit_ljc_water_to_orca/dvclive
     - nodes/fit_ljc_water_to_orca/models
     metrics:
     - nodes/fit_ljc_water_to_orca/node-meta.json:
@@ -101,12 +102,13 @@ stages:
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
-    - nodes/fit_ljc_water_to_orca/logs
+    - nodes/fit_ljc_water_to_orca/dvclive
     - nodes/fit_ljc_water_to_orca/models
     - nodes/fit_ljc_water_to_orca/node-meta.json
     params:
     - evaluate_ljc_water_on_orca
     outs:
+    - nodes/evaluate_ljc_water_on_orca/dvclive
     - nodes/evaluate_ljc_water_on_orca/results
     metrics:
     - nodes/evaluate_ljc_water_on_orca/node-meta.json:
@@ -119,7 +121,7 @@ stages:
     params:
     - fit_polynomial_water_to_gromacs
     outs:
-    - nodes/fit_polynomial_water_to_gromacs/logs
+    - nodes/fit_polynomial_water_to_gromacs/dvclive
     - nodes/fit_polynomial_water_to_gromacs/models
     metrics:
     - nodes/fit_polynomial_water_to_gromacs/node-meta.json:
@@ -130,12 +132,13 @@ stages:
     deps:
     - nodes/CreateGromacsDataset/data
     - nodes/CreateGromacsDataset/node-meta.json
-    - nodes/fit_polynomial_water_to_gromacs/logs
+    - nodes/fit_polynomial_water_to_gromacs/dvclive
     - nodes/fit_polynomial_water_to_gromacs/models
     - nodes/fit_polynomial_water_to_gromacs/node-meta.json
     params:
     - evaluate_polynomial_water_on_gromacs
     outs:
+    - nodes/evaluate_polynomial_water_on_gromacs/dvclive
     - nodes/evaluate_polynomial_water_on_gromacs/results
     metrics:
     - nodes/evaluate_polynomial_water_on_gromacs/node-meta.json:
@@ -148,7 +151,7 @@ stages:
     params:
     - fit_polynomial_water_to_orca
     outs:
-    - nodes/fit_polynomial_water_to_orca/logs
+    - nodes/fit_polynomial_water_to_orca/dvclive
     - nodes/fit_polynomial_water_to_orca/models
     metrics:
     - nodes/fit_polynomial_water_to_orca/node-meta.json:
@@ -159,12 +162,13 @@ stages:
     deps:
     - nodes/CreateOrcaDataset/data
     - nodes/CreateOrcaDataset/node-meta.json
-    - nodes/fit_polynomial_water_to_orca/logs
+    - nodes/fit_polynomial_water_to_orca/dvclive
     - nodes/fit_polynomial_water_to_orca/models
     - nodes/fit_polynomial_water_to_orca/node-meta.json
     params:
     - evaluate_polynomial_water_on_orca
     outs:
+    - nodes/evaluate_polynomial_water_on_orca/dvclive
     - nodes/evaluate_polynomial_water_on_orca/results
     metrics:
     - nodes/evaluate_polynomial_water_on_orca/node-meta.json:

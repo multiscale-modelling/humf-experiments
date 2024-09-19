@@ -3,10 +3,10 @@
 import lightning as L
 import torch
 import zntrack as zn
+from dvclive.lightning import DVCLiveLogger
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 from lightning.pytorch.callbacks import ModelCheckpoint
-from lightning.pytorch.loggers import TensorBoardLogger
 from torch_geometric.loader import DataLoader
 
 from humf_experiments.models.factory import create_model
@@ -23,7 +23,7 @@ class TrainModel(SubmititNode):
 
     data_root_dir: str = zn.deps()
 
-    log_dir: str = zop("logs/")
+    live_dir: str = zop("dvclive/")
     model_dir: str = zop("models/")
 
     def get_executor_parameters(self):
@@ -32,6 +32,7 @@ class TrainModel(SubmititNode):
             "gpus_per_node": 1,
             "mem_gb": 32,
             "slurm_partition": "a100",
+            "timeout_min": 8 * 60,
         }
 
     def do_run(self):
@@ -52,7 +53,9 @@ class TrainModel(SubmititNode):
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
-        logger = TensorBoardLogger(self.log_dir)
+        logger = DVCLiveLogger(
+            dir=self.live_dir, dvcyaml=str(self.nwd / "dvc.yaml"), save_dvc_exp=False
+        )
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
             deterministic=True,

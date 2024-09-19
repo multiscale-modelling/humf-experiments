@@ -151,9 +151,9 @@
                 "item": null
             }
         },
-        "log_dir": {
+        "live_dir": {
             "_type": "pathlib.Path",
-            "value": "$nwd$/logs"
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "pathlib.Path",
@@ -181,6 +181,10 @@
                 "attribute": "data_dir",
                 "item": null
             }
+        },
+        "live_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "znflow.Connection",
@@ -226,9 +230,9 @@
                 "item": null
             }
         },
-        "log_dir": {
+        "live_dir": {
             "_type": "pathlib.Path",
-            "value": "$nwd$/logs"
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "pathlib.Path",
@@ -256,6 +260,10 @@
                 "attribute": "data_dir",
                 "item": null
             }
+        },
+        "live_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "znflow.Connection",
@@ -301,9 +309,9 @@
                 "item": null
             }
         },
-        "log_dir": {
+        "live_dir": {
             "_type": "pathlib.Path",
-            "value": "$nwd$/logs"
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "pathlib.Path",
@@ -331,6 +339,10 @@
                 "attribute": "data_dir",
                 "item": null
             }
+        },
+        "live_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "znflow.Connection",
@@ -376,9 +388,9 @@
                 "item": null
             }
         },
-        "log_dir": {
+        "live_dir": {
             "_type": "pathlib.Path",
-            "value": "$nwd$/logs"
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "pathlib.Path",
@@ -406,6 +418,10 @@
                 "attribute": "data_dir",
                 "item": null
             }
+        },
+        "live_dir": {
+            "_type": "pathlib.Path",
+            "value": "$nwd$/dvclive"
         },
         "model_dir": {
             "_type": "znflow.Connection",
