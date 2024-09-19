@@ -54,7 +54,7 @@ class TrainModel(SubmititNode):
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
         logger = DVCLiveLogger(
-            dir=self.live_dir, dvcyaml=self.nwd / "dvc.yaml", monitor_system=True
+            dir=self.live_dir, dvcyaml=str(self.nwd / "dvc.yaml"), monitor_system=True
         )
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
