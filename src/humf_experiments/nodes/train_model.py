@@ -25,6 +25,7 @@ class TrainModel(SubmititNode):
 
     log_dir: str = zop("logs/")
     model_dir: str = zop("models/")
+    dvclive_yaml_path: str = zop("dvc.yaml")
 
     def get_executor_parameters(self):
         return {
@@ -52,7 +53,9 @@ class TrainModel(SubmititNode):
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
-        logger = DVCLiveLogger(dir=self.log_dir, monitor_system=True)
+        logger = DVCLiveLogger(
+            dir=self.log_dir, dvcyaml=self.dvclive_yaml_path, monitor_system=True
+        )
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
             deterministic=True,
