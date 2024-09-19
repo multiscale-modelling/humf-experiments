@@ -225,17 +225,17 @@ stages:
     outs:
     - path: nodes/fit_ljc_water_to_orca/logs
       hash: md5
-      md5: 045da512d6448bb1ccb91f6c298682e1.dir
-      size: 20580
-      nfiles: 2
+      md5: 01c271469da04d3e0f7fe26cfcaa9f48.dir
+      size: 7066
+      nfiles: 6
     - path: nodes/fit_ljc_water_to_orca/models
       hash: md5
-      md5: 32fb97713174f87f961264272e14d6aa.dir
-      size: 22587
+      md5: 578a49750dcb90fca39ea554f9994bb3.dir
+      size: 22203
       nfiles: 3
     - path: nodes/fit_ljc_water_to_orca/node-meta.json
       hash: md5
-      md5: 56f453117c6aaf4f76fd115416fd679a
+      md5: aafef97781ba12443ed58adf22da6fb7
       size: 64
   evaluate_ljc_water_on_orca:
     cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name

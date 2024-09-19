@@ -169,3 +169,10 @@ stages:
     metrics:
     - nodes/evaluate_polynomial_water_on_orca/node-meta.json:
         cache: false
+params:
+- nodes/fit_ljc_water_to_orca/logs/params.yaml
+metrics:
+- nodes/fit_ljc_water_to_orca/logs/metrics.json
+plots:
+- nodes/fit_ljc_water_to_orca/logs/plots/metrics:
+    x: step
