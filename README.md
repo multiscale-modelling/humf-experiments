@@ -31,9 +31,11 @@ Run `sbatch slurm/inputs/submit_workflow.slurm` to run the workflow. Alternative
 
 To set up the DVC pipeline, run `python main.py`. Rerun this command whenever you make changes to `main.py`. Note that ZnTrack only ever adds stages to or overrides stages in `dvc.yaml`. Thus, when removing stages from `main.py`, you may also want to remove them from `dvc.yaml`.
 
-Once the DVC pipeline is up-to-date, it can be run using `dvc repro` or `dvc exp run`. Consult the DVC docs on these commands for further details. Before running a stage, make sure to load the required software dependencies, i.e. activate the poetry environment for this project and use `module load gromacs` and `module load orca`. Ignore warnings that say PyTorch can't find NVIDIA drivers, the workflow nodes request computational resources including GPUs as necessary.
+Once the DVC pipeline is up-to-date, it can be run using `dvc repro` or `dvc exp run`. Consult the [DVC docs](https://dvc.org/doc/command-reference) on these commands for further details. Before running a stage, make sure to load the required software dependencies, i.e. activate the poetry environment for this project and use `module load gromacs` and `module load orca`. Ignore warnings that say PyTorch can't find NVIDIA drivers, the workflow nodes request computational resources including GPUs as necessary.
 
 The `dvc repro` and `dvc exp run` commands will only run stages with changed dependencies, unless the `--force` option is given. Whenever running a stage creates or modifies output files in `nodes/`, DVC automatically commits the new files to the cache and updates the corresponding placeholder files tracked by git. This is then visible in the output of `git status`. See also the output of `dvc data status` and `dvc status`. To commit the changes, `git commit` and `git push` the placeholder files and `dvc push` the data files to the remote storage. To revert the changes, use `git checkout .` and `dvc checkout`.
+
+The easiest way to browse run results is to `git pull` and `dvc pull` to a local machine and to use the [DVC VSCode extension](https://marketplace.visualstudio.com/items?itemName=Iterative.dvc).
 
 ## Testing
 
