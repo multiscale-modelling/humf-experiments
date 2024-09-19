@@ -52,7 +52,7 @@ class EvaluateModels(SubmititNode):
                 evaluate_model(model, dataset, model_results_dir, live)
 
 
-def evaluate_model(model, dataset, model_results_dir, live):
+def evaluate_model(model, dataset, model_results_dir: Path, live):
     with open(model_results_dir / "params.txt", "w") as f:
         for name, params in model.named_parameters():
             f.write(f"{name}\n{params}\n")
@@ -80,7 +80,10 @@ def evaluate_model(model, dataset, model_results_dir, live):
     fig.add_shape(**get_line_of_equality(target_energies, predicted_energies))
     fig.write_html(model_results_dir / "energy_prediction.html")
     fig.write_image(model_results_dir / "energy_prediction.png")
-    live.log_image("energy prediction", model_results_dir / "energy_prediction.png")
+    live.log_image(
+        model_results_dir.stem + "_energy prediction",
+        model_results_dir / "energy_prediction.png",
+    )
 
     predicted_forces_df = convert_forces_to_long_dataframe(predicted_forces)
     target_forces_df = convert_forces_to_long_dataframe(target_forces)
@@ -107,7 +110,10 @@ def evaluate_model(model, dataset, model_results_dir, live):
     )
     fig.write_html(model_results_dir / "force_prediction.html")
     fig.write_image(model_results_dir / "force_prediction.png")
-    live.log_image("force prediction", model_results_dir / "force_prediction.png")
+    live.log_image(
+        model_results_dir.stem + "_force_prediction",
+        model_results_dir / "force_prediction.png",
+    )
 
 
 def convert_forces_to_long_dataframe(data):
