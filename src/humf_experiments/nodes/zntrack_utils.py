@@ -18,6 +18,7 @@ class SubmititNode(zntrack.Node):
         return {
             "cpus_per_task": 8,
             "mem_gb": 32,
+            "timeout_min": 60,
         }
 
     def do_run(self):

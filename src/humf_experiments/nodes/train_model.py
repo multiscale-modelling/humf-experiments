@@ -32,6 +32,7 @@ class TrainModel(SubmititNode):
             "gpus_per_node": 1,
             "mem_gb": 32,
             "slurm_partition": "a100",
+            "timeout_min": 60,
         }
 
     def do_run(self):
