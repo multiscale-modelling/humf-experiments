@@ -3,10 +3,10 @@
 import lightning as L
 import torch
 import zntrack as zn
+from dvclive.lightning import DVCLiveLogger
 from humf.data.ase_dataset import ASEDataset
 from humf.models.force_field import ForceField
 from lightning.pytorch.callbacks import ModelCheckpoint
-from lightning.pytorch.loggers import TensorBoardLogger
 from torch_geometric.loader import DataLoader
 
 from humf_experiments.models.factory import create_model
@@ -52,7 +52,7 @@ class TrainModel(SubmititNode):
         checkpoint_callback = ModelCheckpoint(
             dirpath=self.model_dir, save_top_k=3, monitor="train/loss"
         )
-        logger = TensorBoardLogger(self.log_dir)
+        logger = DVCLiveLogger(dir=self.log_dir, monitor_system=True)
         trainer = L.Trainer(
             callbacks=[checkpoint_callback],
             deterministic=True,
