@@ -1,0 +1,175 @@
+stages:
+  NH2OTrajectory:
+    cmd: zntrack run humf_experiments.nodes.n_h2o_trajectory.NH2OTrajectory --name
+      NH2OTrajectory
+    deps:
+    - data/h2o_trajectory
+    params:
+    - NH2OTrajectory
+    outs:
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/reduced.gro
+    metrics:
+    - nodes/NH2OTrajectory/node-meta.json:
+        cache: false
+  CreateGromacsDataset:
+    cmd: zntrack run humf_experiments.nodes.create_gromacs_dataset.CreateGromacsDataset
+      --name CreateGromacsDataset
+    deps:
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/node-meta.json
+    - nodes/NH2OTrajectory/reduced.gro
+    outs:
+    - nodes/CreateGromacsDataset/data
+    metrics:
+    - nodes/CreateGromacsDataset/node-meta.json:
+        cache: false
+  ConvertTrajectoryToOrcaInputs:
+    cmd: zntrack run 
+      humf_experiments.nodes.convert_trajectory_to_orca_inputs.ConvertTrajectoryToOrcaInputs
+      --name ConvertTrajectoryToOrcaInputs
+    deps:
+    - nodes/NH2OTrajectory/dumped_forces.txt
+    - nodes/NH2OTrajectory/energy.xvg
+    - nodes/NH2OTrajectory/node-meta.json
+    - nodes/NH2OTrajectory/reduced.gro
+    params:
+    - ConvertTrajectoryToOrcaInputs
+    outs:
+    - nodes/ConvertTrajectoryToOrcaInputs/frames
+    metrics:
+    - nodes/ConvertTrajectoryToOrcaInputs/node-meta.json:
+        cache: false
+  CreateOrcaDataset:
+    cmd: zntrack run humf_experiments.nodes.create_orca_dataset.CreateOrcaDataset
+      --name CreateOrcaDataset
+    deps:
+    - nodes/ConvertTrajectoryToOrcaInputs/frames
+    - nodes/ConvertTrajectoryToOrcaInputs/node-meta.json
+    outs:
+    - nodes/CreateOrcaDataset/data
+    metrics:
+    - nodes/CreateOrcaDataset/node-meta.json:
+        cache: false
+  fit_ljc_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_gromacs
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    params:
+    - fit_ljc_water_to_gromacs
+    outs:
+    - nodes/fit_ljc_water_to_gromacs/dvclive
+    - nodes/fit_ljc_water_to_gromacs/models
+    metrics:
+    - nodes/fit_ljc_water_to_gromacs/node-meta.json:
+        cache: false
+  evaluate_ljc_water_on_gromacs:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_ljc_water_on_gromacs
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    - nodes/fit_ljc_water_to_gromacs/dvclive
+    - nodes/fit_ljc_water_to_gromacs/models
+    - nodes/fit_ljc_water_to_gromacs/node-meta.json
+    params:
+    - evaluate_ljc_water_on_gromacs
+    outs:
+    - nodes/evaluate_ljc_water_on_gromacs/dvclive
+    - nodes/evaluate_ljc_water_on_gromacs/results
+    metrics:
+    - nodes/evaluate_ljc_water_on_gromacs/node-meta.json:
+        cache: false
+  fit_ljc_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_ljc_water_to_orca
+    deps:
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
+    params:
+    - fit_ljc_water_to_orca
+    outs:
+    - nodes/fit_ljc_water_to_orca/dvclive
+    - nodes/fit_ljc_water_to_orca/models
+    metrics:
+    - nodes/fit_ljc_water_to_orca/node-meta.json:
+        cache: false
+  evaluate_ljc_water_on_orca:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_ljc_water_on_orca
+    deps:
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
+    - nodes/fit_ljc_water_to_orca/dvclive
+    - nodes/fit_ljc_water_to_orca/models
+    - nodes/fit_ljc_water_to_orca/node-meta.json
+    params:
+    - evaluate_ljc_water_on_orca
+    outs:
+    - nodes/evaluate_ljc_water_on_orca/dvclive
+    - nodes/evaluate_ljc_water_on_orca/results
+    metrics:
+    - nodes/evaluate_ljc_water_on_orca/node-meta.json:
+        cache: false
+  fit_polynomial_water_to_gromacs:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_gromacs
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    params:
+    - fit_polynomial_water_to_gromacs
+    outs:
+    - nodes/fit_polynomial_water_to_gromacs/dvclive
+    - nodes/fit_polynomial_water_to_gromacs/models
+    metrics:
+    - nodes/fit_polynomial_water_to_gromacs/node-meta.json:
+        cache: false
+  evaluate_polynomial_water_on_gromacs:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_polynomial_water_on_gromacs
+    deps:
+    - nodes/CreateGromacsDataset/data
+    - nodes/CreateGromacsDataset/node-meta.json
+    - nodes/fit_polynomial_water_to_gromacs/dvclive
+    - nodes/fit_polynomial_water_to_gromacs/models
+    - nodes/fit_polynomial_water_to_gromacs/node-meta.json
+    params:
+    - evaluate_polynomial_water_on_gromacs
+    outs:
+    - nodes/evaluate_polynomial_water_on_gromacs/dvclive
+    - nodes/evaluate_polynomial_water_on_gromacs/results
+    metrics:
+    - nodes/evaluate_polynomial_water_on_gromacs/node-meta.json:
+        cache: false
+  fit_polynomial_water_to_orca:
+    cmd: zntrack run humf_experiments.nodes.train_model.TrainModel --name fit_polynomial_water_to_orca
+    deps:
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
+    params:
+    - fit_polynomial_water_to_orca
+    outs:
+    - nodes/fit_polynomial_water_to_orca/dvclive
+    - nodes/fit_polynomial_water_to_orca/models
+    metrics:
+    - nodes/fit_polynomial_water_to_orca/node-meta.json:
+        cache: false
+  evaluate_polynomial_water_on_orca:
+    cmd: zntrack run humf_experiments.nodes.evaluate_models.EvaluateModels --name
+      evaluate_polynomial_water_on_orca
+    deps:
+    - nodes/CreateOrcaDataset/data
+    - nodes/CreateOrcaDataset/node-meta.json
+    - nodes/fit_polynomial_water_to_orca/dvclive
+    - nodes/fit_polynomial_water_to_orca/models
+    - nodes/fit_polynomial_water_to_orca/node-meta.json
+    params:
+    - evaluate_polynomial_water_on_orca
+    outs:
+    - nodes/evaluate_polynomial_water_on_orca/dvclive
+    - nodes/evaluate_polynomial_water_on_orca/results
+    metrics:
+    - nodes/evaluate_polynomial_water_on_orca/node-meta.json:
+        cache: false
