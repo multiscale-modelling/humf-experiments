@@ -40,7 +40,9 @@ class EvaluateModels(SubmititNode):
         dataset = ASEDataset(self.data_root_dir).to(device)  # type: ignore
         results_dir = Path(self.results_dir)
 
-        with Live(dir=self.live_dir, dvcyaml=str(self.nwd / "dvc.yaml")) as live:
+        with Live(
+            dir=self.live_dir, dvcyaml=str(self.nwd / "dvc.yaml"), save_dvc_exp=False
+        ) as live:
             for model_path in Path(self.model_dir).iterdir():
                 model_results_dir = results_dir / model_path.stem
                 model_results_dir.mkdir(parents=True, exist_ok=True)
