@@ -51,7 +51,7 @@ def main():
                 learning_rate=0.1,
                 max_epochs=1000,
                 model=model,
-                trade_off=0.1,
+                trade_off=1,
                 data_root_dir=dataset[1].data_dir,
             )
             EvaluateModels(
