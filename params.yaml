@@ -18,29 +18,29 @@ evaluate_polynomial_water_on_orca:
     model: polynomial_water
 fit_ljc_water_to_gromacs:
     batch_size: 32
-    learning_rate: 0.001
-    max_epochs: 100
+    learning_rate: 0.1
+    max_epochs: 1000
     model: ljc_water
     seed: 42
-    trade_off: 0
+    trade_off: 1
 fit_ljc_water_to_orca:
     batch_size: 32
-    learning_rate: 0.001
-    max_epochs: 100
+    learning_rate: 0.1
+    max_epochs: 1000
     model: ljc_water
     seed: 42
-    trade_off: 0
+    trade_off: 1
 fit_polynomial_water_to_gromacs:
     batch_size: 32
-    learning_rate: 0.001
-    max_epochs: 100
+    learning_rate: 0.1
+    max_epochs: 1000
     model: polynomial_water
     seed: 42
-    trade_off: 0
+    trade_off: 1
 fit_polynomial_water_to_orca:
     batch_size: 32
-    learning_rate: 0.001
-    max_epochs: 100
+    learning_rate: 0.1
+    max_epochs: 1000
     model: polynomial_water
     seed: 42
-    trade_off: 0
+    trade_off: 1

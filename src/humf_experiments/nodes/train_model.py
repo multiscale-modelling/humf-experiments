@@ -61,7 +61,7 @@ class TrainModel(SubmititNode):
             deterministic=True,
             enable_progress_bar=False,
             inference_mode=False,
-            log_every_n_steps=1,
+            log_every_n_steps=len(dataloader) // 2 + 1,
             logger=logger,
             max_epochs=self.max_epochs,
         )
