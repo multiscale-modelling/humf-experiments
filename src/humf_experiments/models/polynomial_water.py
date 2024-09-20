@@ -7,14 +7,13 @@ from humf.layers.pair_energy.inverse_distance_polynomial import (
 
 
 def create_polynomial_water():
-    num_atoms_per_mol = 3
+    num_types = 2
     orders = 12
 
-    initial_params = np.zeros((num_atoms_per_mol, orders))
+    initial_type_params = np.zeros((num_types, orders))
     sites = AtomCenteredStatic(
-        num_atoms_per_mol=3,
-        num_params_per_atom=orders,
-        initial_params=initial_params,
+        initial_type_params=initial_type_params,
+        type_index=[0, 1, 1],  # 0: O, 1: H
     )
 
     pair_energy = InverseDistancePolynomial(orders)
