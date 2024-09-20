@@ -48,7 +48,10 @@ def main():
         for model, dataset in product(models, datasets):
             train_model = TrainModel(
                 name=f"fit_{model}_to_{dataset[0]}",
+                learning_rate=0.1,
+                max_epochs=1000,
                 model=model,
+                trade_off=0.1,
                 data_root_dir=dataset[1].data_dir,
             )
             EvaluateModels(
