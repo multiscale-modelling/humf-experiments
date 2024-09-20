@@ -37,6 +37,8 @@ The `dvc repro` and `dvc exp run` commands will only run stages with changed dep
 
 The easiest way to browse run results is to `git pull` and `dvc pull` to a local machine and to use the [DVC VSCode extension](https://marketplace.visualstudio.com/items?itemName=Iterative.dvc).
 
+If you use `dvc exp run`, note that experiments are synced via `dvc exp push origin` and `dvc exp pull origin`. Blame DVC for annoyingly inconsistent APIs, and see `scripts/dvc.sh` for some helpful summary bash functions.
+
 ## Testing
 
 Run tests with [pytest](https://docs.pytest.org).
