@@ -19,7 +19,7 @@ def main():
 
     with project:
         get_3_h2o_trajectory = NH2OTrajectory(
-            num_molecules=3,
+            num_molecules=1,
             concatenate=1,
             h2o_trajectory_dir="data/h2o_trajectory/",
         )
