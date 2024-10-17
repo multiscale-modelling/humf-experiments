@@ -19,8 +19,8 @@ def main():
 
     with project:
         get_3_h2o_trajectory = NH2OTrajectory(
-            num_molecules=1,
-            concatenate=1,
+            num_molecules=2,
+            concatenate=50,
             h2o_trajectory_dir="data/h2o_trajectory/",
         )
 
@@ -37,7 +37,7 @@ def main():
             pal="1",
             run_orca=True,
             gro_file=get_3_h2o_trajectory.n_h2o_trajectory,
-            every_nth_frame=10,
+            every_nth_frame=5,
         )
         create_orca_dataset = CreateOrcaDataset(
             orca_frames_dir=run_orca.output_dir,
