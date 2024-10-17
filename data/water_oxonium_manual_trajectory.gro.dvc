@@ -1,0 +1,5 @@
+outs:
+- md5: b098a7e13fb646c1680b72de8a8e54ff
+  size: 2352240
+  hash: md5
+  path: water_oxonium_manual_trajectory.gro
