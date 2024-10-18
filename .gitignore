@@ -5,3 +5,4 @@ submitit_logs/
 /notebooks/outputs/
 /slurm/outputs/
 /tests/nodes/
+/testfile
