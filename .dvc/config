@@ -1,0 +1,6 @@
+[core]
+    remote = origin
+['remote "origin"']
+    url = s3://spp2363-public/niklas.kappel/dvc/humf-experiments
+    endpointurl = https://minio.icp.uni-stuttgart.de
+    allow_anonymous_login = true

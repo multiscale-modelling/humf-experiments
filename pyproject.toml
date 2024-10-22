@@ -19,12 +19,12 @@ plotly = "^5.24.0"
 submitit = "^1.5.1"
 dvclive = "^3.48.0"
 kaleido = "0.2.1"
+dvc-s3 = "^3.2.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
 pre-commit = "^3.8.0"
 pytest = "^8.3.2"
-dvc-ssh = "^4.1.1"
 
 [tool.isort]
 profile = "black"
