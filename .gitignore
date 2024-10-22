@@ -2,7 +2,7 @@ __pycache__/
 processed/
 submitit_logs/
 
-/notebooks/outputs/
+/notebooks/
 /slurm/outputs/
 /tests/nodes/
 /testfile
